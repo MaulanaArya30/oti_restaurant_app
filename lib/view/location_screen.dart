@@ -21,7 +21,7 @@ class LocationScreen extends StatelessWidget {
                   'Select Location',
                   style: TextStyle(
                     color: Color(0xFF232D42),
-                    fontSize: 39,
+                    fontSize: 40,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w700,
                   ),

@@ -10,7 +10,7 @@ class LocationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 32),
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(40),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Color(0XFFE5E7EB),
@@ -23,16 +23,17 @@ class LocationWidget extends StatelessWidget {
           children: [
             SizedBox(width: 25),
             Container(
-              padding: EdgeInsets.all(10),
+              height: 100,
+              width: 100,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color(0xFFE5E7EB),
+                borderRadius: BorderRadius.circular(24),
+                color: Colors.white,
               ),
               child: Image(
                 image: AssetImage('assets/images/pic.png'),
               ),
             ),
-            SizedBox(width: 25),
+            SizedBox(width: 45),
             Text(
               locationName,
               style: TextStyle(

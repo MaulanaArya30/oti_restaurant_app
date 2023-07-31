@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_menu/components/constants.dart';
 import 'package:restaurant_menu/view/alcohol_screen.dart';
 import 'package:restaurant_menu/view/beverages_screen.dart';
 import 'package:restaurant_menu/view/food_screen.dart';
 import 'package:restaurant_menu/view/promo_screen.dart';
 
-import '../widgets/menu_button.dart';
+import '../components/menu_button.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -30,8 +31,11 @@ class _MenuScreenState extends State<MenuScreen> {
           child: Column(
             children: [
               Padding(
-                padding:
-                    EdgeInsets.only(top: 60, left: 60, right: 60, bottom: 60),
+                padding: EdgeInsets.only(
+                  top: kDefaultPadding,
+                  left: kDefaultPadding,
+                  right: kDefaultPadding,
+                ),
                 child: Column(
                   children: [
                     Text(
@@ -43,9 +47,9 @@ class _MenuScreenState extends State<MenuScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 45),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MenuButton(
                           text: 'Promo',
@@ -90,6 +94,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       height: 2,
                       decoration: BoxDecoration(color: Color(0xFFE5E7EB)),
                     ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),

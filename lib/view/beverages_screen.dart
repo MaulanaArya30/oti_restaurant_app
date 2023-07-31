@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_menu/components/constants.dart';
 
-import '../widgets/menu_widget.dart';
+import '../components/menu_widget.dart';
 
 class BeveragesScreen extends StatelessWidget {
   const BeveragesScreen({super.key});
@@ -8,19 +9,35 @@ class BeveragesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List beverageList = [
-      MenuWidget(),
-      MenuWidget(),
-      MenuWidget(),
-      MenuWidget(),
-      MenuWidget(),
+      MenuWidget(
+        name: 'menu name',
+        price: '999,999',
+      ),
+      MenuWidget(
+        name: 'menu name',
+        price: '999,999',
+      ),
+      MenuWidget(
+        name: 'menu name',
+        price: '999,999',
+      ),
+      MenuWidget(
+        name: 'menu name',
+        price: '999,999',
+      ),
+      MenuWidget(
+        name: 'menu name',
+        price: '999,999',
+      ),
     ];
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.75,
+      height: MediaQuery.of(context).size.height * kMenuScreenHeight,
       child: GridView.builder(
-        padding: EdgeInsets.only(bottom: 20, right: 20, left: 20, top: 0),
+        padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)
+            .copyWith(bottom: kDefaultPadding),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 3 / 4,
+          childAspectRatio: kMenuAspectRatio,
           crossAxisCount: 2,
         ),
         itemCount: beverageList.length,

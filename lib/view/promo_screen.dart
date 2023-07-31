@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_menu/components/constants.dart';
 
-import '../widgets/promo_widget.dart';
+import '../components/promo_widget.dart';
 
 class PromoScreen extends StatelessWidget {
   const PromoScreen({super.key});
@@ -16,9 +17,10 @@ class PromoScreen extends StatelessWidget {
     ];
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.75,
+      height: MediaQuery.of(context).size.height * 0.9,
       child: ListView.builder(
-        padding: EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 30),
+        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding)
+            .copyWith(bottom: kDefaultPadding),
         itemCount: promoList.length,
         itemBuilder: (context, index) => promoList[index],
       ),
