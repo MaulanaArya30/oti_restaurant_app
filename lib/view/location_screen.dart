@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_menu/view/menu_screen.dart';
 
-import '../widgets/location_widget.dart';
+import '../components/location_widget.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});

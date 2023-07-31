@@ -12,6 +12,7 @@ class BeveragesScreen extends StatelessWidget {
       MenuWidget(
         name: 'menu name',
         price: '999,999',
+        isSoldOut: true,
       ),
       MenuWidget(
         name: 'menu name',
