@@ -17,6 +17,7 @@ class PromoScreen extends StatelessWidget {
     ];
 
     return Container(
+      padding: EdgeInsets.only(top: 10),
       height: MediaQuery.of(context).size.height * 0.9,
       child: ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: kDefaultPadding)

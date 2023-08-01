@@ -26,6 +26,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -39,15 +40,46 @@ class _MenuScreenState extends State<MenuScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Menu',
+                      'List Menu',
                       style: TextStyle(
-                        color: Color(0xFF232D42),
+                        color: Colors.white,
                         fontSize: 40,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
+                        fontFamily: 'JollyLodger',
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 3,
                       ),
                     ),
-                    SizedBox(height: 45),
+                    SizedBox(height: 24),
+                    TextField(
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                        height: 1.43,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Nama Menu',
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          height: 1.43,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        filled: true,
+                        fillColor: Color(0xFF4F4F4F),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -88,11 +120,6 @@ class _MenuScreenState extends State<MenuScreen> {
                           },
                         ),
                       ],
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 2,
-                      decoration: BoxDecoration(color: Color(0xFFE5E7EB)),
                     ),
                     SizedBox(height: 30),
                   ],

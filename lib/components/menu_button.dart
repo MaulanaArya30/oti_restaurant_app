@@ -16,29 +16,36 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
+        GestureDetector(
           onTap: onTap,
-          child: Column(
+          child: Row(
             children: [
-              TextButton(
-                onPressed: null,
-                child: Text(
-                  '$text',
-                  style: TextStyle(
-                    color: isPressed ? Color(0xFF009CDE) : null,
-                    fontSize: 14,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  isPressed
+                      ? Container(
+                          width: (text.length + 3) * 10,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFAD05A).withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                        )
+                      : Container(),
+                  Text(
+                    '$text',
+                    style: TextStyle(
+                      color: isPressed ? Color(0xFFFAD05A) : Colors.white,
+                      fontSize: 16,
+                      height: 1.25,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
+                ],
               ),
-              isPressed
-                  ? Container(
-                      width: (text.length) * 10,
-                      height: 2,
-                      decoration: BoxDecoration(color: Color(0xFF009CDE)),
-                    )
-                  : Container(),
+              SizedBox(width: 20),
             ],
           ),
         ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:restaurant_menu/components/constants.dart';
 
 class LocationWidget extends StatelessWidget {
   LocationWidget({required this.locationName, this.onPressed});
@@ -10,12 +12,12 @@ class LocationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 32),
-      padding: EdgeInsets.all(40),
+      padding: EdgeInsets.all(56),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Color(0XFFE5E7EB),
+        borderRadius: BorderRadius.circular(32),
+        color: kWidgetColor,
       ),
-      height: 180,
+      height: 280,
       width: double.infinity,
       child: InkWell(
         onTap: onPressed,
@@ -23,24 +25,23 @@ class LocationWidget extends StatelessWidget {
           children: [
             SizedBox(width: 25),
             Container(
-              height: 100,
-              width: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                color: Colors.white,
+                color: kWidgetColor,
               ),
               child: Image(
-                image: AssetImage('assets/images/pic.png'),
+                image: AssetImage('assets/images/logoexample.png'),
               ),
             ),
-            SizedBox(width: 45),
+            SizedBox(width: 40),
             Text(
               locationName,
               style: TextStyle(
-                color: Color(0xFF232D42),
-                fontSize: 25,
+                color: Colors.white,
+                fontSize: 32,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w500,
+                letterSpacing: 0.20,
               ),
             ),
           ],
