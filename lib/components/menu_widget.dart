@@ -46,16 +46,16 @@ class MenuWidget extends StatelessWidget {
                       name,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 25,
+                        fontSize: 28,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 1),
                     Text(
                       'Rp. $price',
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.6),
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

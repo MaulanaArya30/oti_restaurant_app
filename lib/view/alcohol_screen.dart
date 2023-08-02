@@ -27,7 +27,7 @@ class AlcoholScreen extends StatelessWidget {
       ),
     ];
 
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * kMenuScreenHeight,
       child: GridView.builder(
         padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)

@@ -10,17 +10,17 @@ class LocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 32),
-      padding: EdgeInsets.all(56),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32),
-        color: kWidgetColor,
-      ),
-      height: 280,
-      width: double.infinity,
-      child: InkWell(
-        onTap: onPressed,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 32),
+        padding: EdgeInsets.all(56),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: kWidgetColor,
+        ),
+        height: 280,
+        width: double.infinity,
         child: Row(
           children: [
             SizedBox(width: 25),
