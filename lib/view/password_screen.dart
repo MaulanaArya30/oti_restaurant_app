@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({
     super.key,
+    required this.location,
   });
+
+  final String location;
+  //TODO: User location name to seach password
 
   @override
   State<PasswordScreen> createState() => _PasswordScreenState();
@@ -11,6 +15,7 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreenState extends State<PasswordScreen> {
   bool _obscureText = true;
+  late TextEditingController passwordController;
 
   void _toggle() {
     setState(() {
@@ -51,6 +56,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
             ),
             SizedBox(height: 24),
             TextField(
+              controller: passwordController,
               obscureText: _obscureText,
               autofocus: true,
               decoration: InputDecoration(
@@ -83,6 +89,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
               onPressed: () {
                 print('pressed');
+                //TODO: Match the location name password with passwordController
               },
               child: Text(
                 'Submit',

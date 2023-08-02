@@ -8,11 +8,11 @@ import '../components/location_widget.dart';
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});
 
-  Future<void> dialogBuilder(BuildContext context) {
+  Future<void> dialogBuilder(BuildContext context, String location) {
     return showDialog(
       context: context,
       builder: (context) {
-        return PasswordScreen();
+        return PasswordScreen(location: location);
       },
     );
   }
@@ -33,7 +33,10 @@ class LocationScreen extends StatelessWidget {
       LocationWidget(
         locationName: 'Hot Station',
         onPressed: () {
-          dialogBuilder(context);
+          dialogBuilder(
+            context,
+            'Hot Station',
+          );
         },
       ),
       LocationWidget(locationName: 'Vegas'),
