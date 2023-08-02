@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_menu/components/constants.dart';
-import 'package:restaurant_menu/view/menu_screen.dart';
 import 'package:restaurant_menu/view/password_screen.dart';
 
 import '../components/location_widget.dart';
@@ -21,15 +20,14 @@ class LocationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List locationList = [
       LocationWidget(
-          locationName: 'Macau',
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MenuScreen(),
-              ),
-            );
-          }),
+        locationName: 'Macau',
+        onPressed: () {
+          dialogBuilder(
+            context,
+            'Macau',
+          );
+        },
+      ),
       LocationWidget(
         locationName: 'Hot Station',
         onPressed: () {
@@ -39,8 +37,24 @@ class LocationScreen extends StatelessWidget {
           );
         },
       ),
-      LocationWidget(locationName: 'Vegas'),
-      LocationWidget(locationName: 'Location 4'),
+      LocationWidget(
+        locationName: 'Vegas',
+        onPressed: () {
+          dialogBuilder(
+            context,
+            'Vegas',
+          );
+        },
+      ),
+      LocationWidget(
+        locationName: 'Location 4',
+        onPressed: () {
+          dialogBuilder(
+            context,
+            'Location 4',
+          );
+        },
+      ),
     ];
 
     return Scaffold(
@@ -50,7 +64,6 @@ class LocationScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Center(
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text('Pilih Lokasi', style: kTitleStyle),
                 SizedBox(height: 48),

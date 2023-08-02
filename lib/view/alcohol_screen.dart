@@ -1,31 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_menu/components/constants.dart';
-
-import '../components/menu_widget.dart';
+import 'package:restaurant_menu/components/menu_list.dart';
+import 'package:restaurant_menu/components/menu_widget.dart';
 
 class AlcoholScreen extends StatelessWidget {
   const AlcoholScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List alcoholList = [
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-    ];
+    List<MenuWidget> _alcoholList = MenuList().alcoholList;
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * kMenuScreenHeight,
@@ -36,9 +19,9 @@ class AlcoholScreen extends StatelessWidget {
           childAspectRatio: kMenuAspectRatio,
           crossAxisCount: 2,
         ),
-        itemCount: alcoholList.length,
+        itemCount: _alcoholList.length,
         itemBuilder: (context, index) {
-          return alcoholList[index];
+          return _alcoholList[index];
         },
       ),
     );

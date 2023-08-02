@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'menu_screen.dart';
+
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({
     super.key,
@@ -15,7 +17,7 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreenState extends State<PasswordScreen> {
   bool _obscureText = true;
-  late TextEditingController passwordController;
+  late String passwordController;
 
   void _toggle() {
     setState(() {
@@ -55,8 +57,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
             ),
             SizedBox(height: 24),
-            TextField(
-              controller: passwordController,
+            TextFormField(
+              onChanged: (value) {
+                passwordController = value;
+              },
               obscureText: _obscureText,
               autofocus: true,
               decoration: InputDecoration(
@@ -88,7 +92,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 borderRadius: BorderRadius.circular(40),
               ),
               onPressed: () {
-                print('pressed');
+                print(passwordController);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MenuScreen(),
+                  ),
+                );
                 //TODO: Match the location name password with passwordController
               },
               child: Text(

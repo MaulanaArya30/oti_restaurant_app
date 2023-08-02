@@ -1,36 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_menu/components/constants.dart';
-
-import '../components/menu_widget.dart';
+import 'package:restaurant_menu/components/menu_list.dart';
+import 'package:restaurant_menu/components/menu_widget.dart';
 
 class BeveragesScreen extends StatelessWidget {
   const BeveragesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List beverageList = [
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-        isSoldOut: true,
-      ),
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-      MenuWidget(
-        name: 'menu name',
-        price: '999,999',
-      ),
-    ];
+    List<MenuWidget> _beverageList = MenuList().beverageList;
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * kMenuScreenHeight,
@@ -41,9 +19,9 @@ class BeveragesScreen extends StatelessWidget {
           childAspectRatio: kMenuAspectRatio,
           crossAxisCount: 2,
         ),
-        itemCount: beverageList.length,
+        itemCount: _beverageList.length,
         itemBuilder: (context, index) {
-          return beverageList[index];
+          return _beverageList[index];
         },
       ),
     );

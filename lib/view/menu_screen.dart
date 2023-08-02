@@ -4,6 +4,7 @@ import 'package:restaurant_menu/view/alcohol_screen.dart';
 import 'package:restaurant_menu/view/beverages_screen.dart';
 import 'package:restaurant_menu/view/food_screen.dart';
 import 'package:restaurant_menu/view/promo_screen.dart';
+import 'package:restaurant_menu/view/search_screen.dart';
 
 import '../components/menu_button.dart';
 
@@ -15,12 +16,15 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  String? searchController;
+
   int _index = 0;
   final screens = [
     PromoScreen(),
     FoodScreen(),
     BeveragesScreen(),
     AlcoholScreen(),
+    SearchScreen(),
   ];
 
   @override
@@ -51,6 +55,13 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                     SizedBox(height: 24),
                     TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          _index = 4;
+                        });
+                        searchController = value;
+                        print(searchController);
+                      },
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
