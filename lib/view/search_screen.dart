@@ -70,8 +70,8 @@ class _SearchScreenState extends State<SearchScreen> {
           // }
           //return searchList[index];
           if (widget.searchController == null) {
-            searchList = _totalList;
             setState(() {
+              searchList = _totalList;
               length = searchList.length;
             });
 
@@ -82,8 +82,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 .name
                 .toLowerCase()
                 .contains(widget.searchController!.toLowerCase())) {
-              searchList.add(_totalList[index]);
               setState(() {
+                searchList.add(_totalList[index]);
                 length = searchList.length;
               });
               return searchList[index];
