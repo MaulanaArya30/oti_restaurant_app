@@ -58,8 +58,11 @@ class _MenuScreenState extends State<MenuScreen> {
                       onChanged: (value) {
                         setState(() {
                           _index = 4;
+                          searchController = value;
+                          screens[_index] = SearchScreen(
+                            searchController: searchController,
+                          );
                         });
-                        searchController = value;
                         print(searchController);
                       },
                       style: TextStyle(

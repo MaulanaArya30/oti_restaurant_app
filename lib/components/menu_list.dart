@@ -7,7 +7,7 @@ class MenuList {
       price: '999,999',
     ),
     MenuWidget(
-      name: 'Menu name',
+      name: 'chicken wings',
       price: '999,999',
     ),
     MenuWidget(

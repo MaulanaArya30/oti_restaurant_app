@@ -14,6 +14,19 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   List<MenuWidget> _totalList = MenuList().totalList;
+  List<MenuWidget> searchList = [];
+  int length = 0;
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   setState(() {
+  //     searchList = _totalList;
+  //     length = searchList.length;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -25,19 +38,59 @@ class _SearchScreenState extends State<SearchScreen> {
           childAspectRatio: kMenuAspectRatio,
           crossAxisCount: 2,
         ),
-        itemCount: _totalList.length,
+        itemCount: length,
         itemBuilder: (context, index) {
           // if (widget.searchController == null) {
-          //   return _totalList[index];
-          // } else if (_totalList[index]
-          //     .name
-          //     .toLowerCase()
-          //     .contains(widget.searchController!.toLowerCase())) {
-          //   return _totalList[index];
+          //   setState(() {
+          //     searchList = _totalList;
+          //     length = searchList.length;
+          //   });
+          //   return searchList[index];
+          // } else if (widget.searchController?.length == 1) {
+          //   setState(() {
+          //     searchList = _totalList;
+          //     length = searchList.length;
+          //   });
+          //   return searchList[index];
           // } else {
-          //   return SizedBox();
+          //   searchList.clear();
+          //   if (_totalList[index]
+          //       .name
+          //       .toLowerCase()
+          //       .contains(widget.searchController!.toLowerCase())) {
+          //     setState(() {
+          //       searchList.add(_totalList[index]);
+          //       length = searchList.length;
+          //     });
+
+          //     return searchList[index];
+          //   } else {
+          //     return SizedBox();
+          //   }
           // }
-          return _totalList[index];
+          //return searchList[index];
+          if (widget.searchController == null) {
+            searchList = _totalList;
+            setState(() {
+              length = searchList.length;
+            });
+
+            return searchList[index];
+          } else {
+            searchList.clear();
+            if (_totalList[index]
+                .name
+                .toLowerCase()
+                .contains(widget.searchController!.toLowerCase())) {
+              searchList.add(_totalList[index]);
+              setState(() {
+                length = searchList.length;
+              });
+              return searchList[index];
+            } else {
+              return SizedBox();
+            }
+          }
         },
       ),
     );
