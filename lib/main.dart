@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:restaurant_menu/providers/auth_provider.dart';
+import 'package:restaurant_menu/view/location_screen.dart';
+import 'package:restaurant_menu/view/menu_screen.dart';
 import 'package:restaurant_menu/view/splash_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://qyqspghvjwiepnxjmhis.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5cXNwZ2h2andpZXBueGptaGlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA1MjQ5NDEsImV4cCI6MjAwNjEwMDk0MX0.nGcPqXT5JwZpGV7_ZYi6Hv2JsKjnA9bwqY48UuZdxqE',
+    authFlowType: AuthFlowType.pkce,
+  );
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -10,12 +24,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'RestaurantMenuApp',
-      home: SafeArea(
-        child: SplashScreen(),
-      ),
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'RestaurantMenuApp',
+        home: AuthChecker());
+  }
+}
+
+class AuthChecker extends ConsumerWidget {
+  const AuthChecker({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authStateProvider);
+
+    return authState.when(
+      data: (state) {
+        if (state.session == null) {
+          return const MenuScreen();
+        } else {
+          return const LocationScreen();
+        }
+      },
+      loading: () => const SplashScreen(),
+      error: (err, stack) => const SplashScreen(),
     );
   }
 }
