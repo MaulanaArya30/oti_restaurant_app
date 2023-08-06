@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:restaurant_menu/components/constants.dart';
 
 class LocationWidget extends StatelessWidget {
-  LocationWidget({required this.locationName, this.onPressed});
+  const LocationWidget({super.key, required this.locationName, this.onPressed});
 
   final String locationName;
   final VoidCallback? onPressed;
@@ -13,8 +12,8 @@ class LocationWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        margin: EdgeInsets.only(bottom: 32),
-        padding: EdgeInsets.all(56),
+        margin: const EdgeInsets.only(bottom: 32),
+        padding: const EdgeInsets.all(56),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           color: kWidgetColor,
@@ -23,20 +22,20 @@ class LocationWidget extends StatelessWidget {
         width: double.infinity,
         child: Row(
           children: [
-            SizedBox(width: 25),
+            const SizedBox(width: 25),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
                 color: kWidgetColor,
               ),
-              child: Image(
+              child: const Image(
                 image: AssetImage('assets/images/logoexample.png'),
               ),
             ),
-            SizedBox(width: 40),
+            const SizedBox(width: 40),
             Text(
               locationName,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 32,
                 fontFamily: 'Inter',

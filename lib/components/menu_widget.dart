@@ -3,20 +3,20 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:restaurant_menu/components/constants.dart';
 
-class MenuWidget extends StatelessWidget {
-  MenuWidget({required this.name, required this.price, this.isSoldOut = false});
+import '../models/menu_model.dart';
 
-  final String name;
-  final String price;
-  final bool isSoldOut;
+class MenuWidget extends StatelessWidget {
+  final Menu menu;
+
+  const MenuWidget({super.key, required this.menu});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.all(15),
-          padding: EdgeInsets.all(25),
+          margin: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             color: kWidgetColor,
@@ -30,29 +30,29 @@ class MenuWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                     image: DecorationImage(
-                      image: AssetImage('assets/images/steak.jpeg'),
+                      image: NetworkImage(menu.thumbnail),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               Expanded(
                 flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
-                      style: TextStyle(
+                      menu.title,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 28,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 1),
+                    const SizedBox(height: 1),
                     Text(
-                      'Rp. $price',
+                      'Rp. ${menu.price}',
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.6),
                         fontSize: 22,
@@ -65,10 +65,10 @@ class MenuWidget extends StatelessWidget {
             ],
           ),
         ),
-        isSoldOut
+        menu.soldOut
             ? Container(
-                margin: EdgeInsets.all(15),
-                padding: EdgeInsets.all(25),
+                margin: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(25),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24),
                   color: Colors.black.withOpacity(0.6),
@@ -76,7 +76,7 @@ class MenuWidget extends StatelessWidget {
                 child: ClipRect(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'SOLD OUT',
                         style: TextStyle(
@@ -91,7 +91,7 @@ class MenuWidget extends StatelessWidget {
                   ),
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }

@@ -8,7 +8,7 @@ double kMenuPagePadding = kDefaultPadding - 15;
 
 double kMenuAspectRatio = 0.75;
 
-TextStyle kTitleStyle = TextStyle(
+TextStyle kTitleStyle = const TextStyle(
   color: Colors.white,
   fontSize: 48,
   fontFamily: 'JollyLodger',
@@ -16,6 +16,6 @@ TextStyle kTitleStyle = TextStyle(
   letterSpacing: 3.0,
 );
 
-Color kBackgroundColor = Color(0xFF1C1D1F);
+Color kBackgroundColor = const Color(0xFF1C1D1F);
 
-Color kWidgetColor = Color(0xFF27282A);
+Color kWidgetColor = const Color(0xFF27282A);

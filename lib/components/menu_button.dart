@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MenuButton extends StatelessWidget {
-  MenuButton({
+  const MenuButton({
     super.key,
     this.isPressed = false,
     required this.text,
@@ -14,43 +14,21 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Row(
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  isPressed
-                      ? Container(
-                          width: (text.length + 3) * 10,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFAD05A).withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                        )
-                      : Container(),
-                  Text(
-                    '$text',
-                    style: TextStyle(
-                      color: isPressed ? Color(0xFFFAD05A) : Colors.white,
-                      fontSize: 16,
-                      height: 1.25,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(width: 20),
-            ],
-          ),
+    return TextButton(
+      style: TextButton.styleFrom(
+        foregroundColor: isPressed ? const Color(0xFFFAD05A) : Colors.white,
+        backgroundColor: isPressed
+            ? const Color(0xFFFAD05A).withOpacity(0.2)
+            : Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
         ),
-        SizedBox(width: 20),
-      ],
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+      onPressed: onTap,
+      child: Text(text),
     );
   }
 }
+
+//color: const Color(0xFFFAD05A).withOpacity(0.2),

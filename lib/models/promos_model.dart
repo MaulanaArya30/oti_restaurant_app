@@ -1,5 +1,5 @@
 class Promo {
-  String id;
+  int id;
   String thumbnail;
   bool visible;
   String userId;

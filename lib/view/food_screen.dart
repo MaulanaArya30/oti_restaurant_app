@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:restaurant_menu/components/constants.dart';
-import 'package:restaurant_menu/components/menu_list.dart';
 import 'package:restaurant_menu/components/menu_widget.dart';
+import 'package:restaurant_menu/providers/data_provider.dart';
 
-class FoodScreen extends StatelessWidget {
-  const FoodScreen({super.key});
+class FoodScreen extends ConsumerWidget {
+  final int categoryId;
+
+  const FoodScreen({super.key, required this.categoryId});
 
   @override
-  Widget build(BuildContext context) {
-    List<MenuWidget> _foodList = MenuList().foodList;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final menus = ref.watch(menuInCategoryProvider(categoryId));
 
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * kMenuScreenHeight,
-      child: GridView.builder(
-        padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)
-            .copyWith(bottom: kDefaultPadding),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: kMenuAspectRatio,
-          crossAxisCount: 2,
-        ),
-        itemCount: _foodList.length,
-        itemBuilder: (context, index) {
-          return _foodList[index];
-        },
-      ),
+    return menus.when(
+      data: (data) {
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)
+              .copyWith(bottom: kDefaultPadding),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: kMenuAspectRatio,
+            crossAxisCount: 2,
+          ),
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            return MenuWidget(menu: data[index]);
+          },
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, stacktrace) => Text(err.toString()),
     );
   }
 }

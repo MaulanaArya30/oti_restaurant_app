@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:restaurant_menu/providers/auth_provider.dart';
 import 'package:restaurant_menu/view/location_screen.dart';
 import 'package:restaurant_menu/view/menu_screen.dart';
-import 'package:restaurant_menu/view/splash_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -24,10 +23,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                  primary: const Color(0xFFFAD05A),
+                )),
         title: 'RestaurantMenuApp',
-        home: AuthChecker());
+        home: const AuthChecker());
   }
 }
 
@@ -36,18 +39,11 @@ class AuthChecker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authStateProvider);
-
-    return authState.when(
-      data: (state) {
-        if (state.session == null) {
-          return const MenuScreen();
-        } else {
-          return const LocationScreen();
-        }
-      },
-      loading: () => const SplashScreen(),
-      error: (err, stack) => const SplashScreen(),
-    );
+    final authState = ref.watch(authNotifierProvider);
+    if (authState == null) {
+      return const LocationScreen();
+    } else {
+      return const MenuScreenWithHook();
+    }
   }
 }

@@ -25,7 +25,7 @@ class Menu {
       title: json['title'],
       price: json['price'],
       thumbnail: json['thumbnail'],
-      categoryId: json['category_id'],
+      categoryId: json['category'],
       visible: json['visible'],
       soldOut: json['sold_out'],
       userId: json['user_id'],

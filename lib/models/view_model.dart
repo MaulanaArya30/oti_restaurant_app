@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:restaurant_menu/models/category_model.dart';
 import 'package:restaurant_menu/models/promos_model.dart';
 
 import 'menu_model.dart';
