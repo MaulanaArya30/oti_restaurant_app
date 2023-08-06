@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_menu/components/constants.dart';
 
 class LocationWidget extends StatelessWidget {
-  const LocationWidget({super.key, required this.locationName, this.onPressed});
+  const LocationWidget(
+      {super.key,
+      required this.locationName,
+      this.onPressed,
+      required this.thumbnail});
 
   final String locationName;
   final VoidCallback? onPressed;
+  final String thumbnail;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +28,17 @@ class LocationWidget extends StatelessWidget {
         child: Row(
           children: [
             const SizedBox(width: 25),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                color: kWidgetColor,
-              ),
-              child: const Image(
-                image: AssetImage('assets/images/logoexample.png'),
+            AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(thumbnail),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(24),
+                  color: kWidgetColor,
+                ),
               ),
             ),
             const SizedBox(width: 40),

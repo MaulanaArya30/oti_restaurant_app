@@ -42,6 +42,7 @@ class LocationScreen extends ConsumerWidget {
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               return LocationWidget(
+                                thumbnail: data[index].thumbnail,
                                 onPressed: () =>
                                     dialogBuilder(context, data[index].email),
                                 locationName: data[index].storeName,
