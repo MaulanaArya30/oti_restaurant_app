@@ -30,7 +30,7 @@ class PasswordScreen extends HookConsumerWidget {
         ),
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            height: 348,
+            height: 360,
             width: 416,
             child: Form(
               key: formKey,
