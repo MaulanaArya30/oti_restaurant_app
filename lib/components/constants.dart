@@ -6,7 +6,8 @@ double kDefaultPadding = 60;
 
 double kMenuPagePadding = kDefaultPadding - 15;
 
-double kMenuAspectRatio = 0.75;
+//double kMenuAspectRatio = 0.75;
+double kMenuAspectRatio = 600 / 80;
 
 TextStyle kTitleStyle = const TextStyle(
   color: Colors.white,

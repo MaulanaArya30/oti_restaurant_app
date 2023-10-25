@@ -26,7 +26,13 @@ class MenuButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       onPressed: onTap,
-      child: Text(text),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     );
   }
 }

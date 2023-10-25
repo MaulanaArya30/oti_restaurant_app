@@ -22,7 +22,7 @@ class FoodScreen extends ConsumerWidget {
               .copyWith(bottom: kDefaultPadding),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: kMenuAspectRatio,
-            crossAxisCount: 2,
+            crossAxisCount: 1,
           ),
           itemCount: data.length,
           itemBuilder: (context, index) {

@@ -73,14 +73,18 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                     hintText: 'Nama Menu',
                                     hintStyle: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 16,
+                                      fontSize: 18,
                                       fontFamily: 'Inter',
                                       fontWeight: FontWeight.w400,
                                       height: 1.43,
                                     ),
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                      color: Colors.white,
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: const Icon(
+                                        Icons.search,
+                                        size: 40,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                     filled: true,
                                     fillColor: const Color(0xFF4F4F4F),
