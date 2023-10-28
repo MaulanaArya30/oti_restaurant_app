@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:restaurant_menu/components/constants.dart';
 
 class LocationWidget extends StatelessWidget {
@@ -57,4 +58,10 @@ class LocationWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<dynamic> getYourCachedDataFromHive() async {
+  final box = await Hive.openBox('myBox');
+  final cachedData = box.get('myData') as List<dynamic>;
+  return cachedData;
 }
