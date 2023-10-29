@@ -20,7 +20,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
     final selected = useState(0);
 
     return Scaffold(
-        backgroundColor: appColors.backGroundColor,
+        backgroundColor: appColors.backgroundColor,
         body: data.when(
             skipLoadingOnRefresh: true,
             skipLoadingOnReload: true,
@@ -47,7 +47,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                 const Text(
                                   'List Menu',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: appColors.textColor,
                                     fontSize: 40,
                                     fontFamily: 'JollyLodger',
                                     fontWeight: FontWeight.w400,
@@ -63,7 +63,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                     selected.value = -1;
                                   },
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: appColors.textColor,
                                     fontSize: 16,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w400,
@@ -72,7 +72,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                   decoration: InputDecoration(
                                     hintText: 'Nama Menu',
                                     hintStyle: const TextStyle(
-                                      color: Colors.white,
+                                      color: appColors.textColor,
                                       fontSize: 18,
                                       fontFamily: 'Inter',
                                       fontWeight: FontWeight.w400,
@@ -83,13 +83,13 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                       child: const Icon(
                                         Icons.search,
                                         size: 40,
-                                        color: Colors.white,
+                                        color: appColors.textColor,
                                       ),
                                     ),
                                     filled: true,
-                                    fillColor: const Color(0xFF4F4F4F),
+                                    fillColor: appColors.searchbarColor,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(100),
+                                      borderRadius: BorderRadius.circular(80),
                                       borderSide: BorderSide.none,
                                     ),
                                   ),
@@ -150,7 +150,10 @@ class MenuScreenWithHook extends HookConsumerWidget {
                               onPressed: () => {
                                     Supabase.instance.client.auth.signOut(),
                                   },
-                              child: const Text('Sign Out'))
+                              child: const Text(
+                                'Sign Out',
+                                style: TextStyle(color: appColors.textColor),
+                              ))
                         ],
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:restaurant_menu/providers/auth_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:restaurant_menu/components/constants.dart';
 
 class PasswordScreen extends HookConsumerWidget {
   const PasswordScreen({
@@ -90,7 +91,7 @@ class PasswordScreen extends HookConsumerWidget {
                       minWidth: 103,
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 24),
-                      color: const Color(0xFFFAD05A),
+                      color: appColors.buttonColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                       ),
