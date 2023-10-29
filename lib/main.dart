@@ -48,10 +48,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: const Color(0xFFFAD05A),
-                )),
+        // theme: ThemeData(
+        //     colorScheme: Theme.of(context).colorScheme.copyWith(
+        //           primary: const Color(0xFFFAD05A),
+        //         )),
         title: 'RestaurantMenuApp',
         home: const AuthChecker());
   }

@@ -23,14 +23,14 @@ class LocationScreen extends ConsumerWidget {
     final store = ref.watch(storeProvider);
 
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: appColors.backGroundColor,
       body: Padding(
         padding: const EdgeInsets.all(60),
         child: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                Text('Pilih Lokasi', style: kTitleStyle),
+                Text('Pilih Lokasi', style: appColors.titleStyle),
                 const SizedBox(height: 48),
                 Container(
                     padding: const EdgeInsets.only(bottom: 60),

@@ -20,7 +20,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
     final selected = useState(0);
 
     return Scaffold(
-        backgroundColor: kBackgroundColor,
+        backgroundColor: appColors.backGroundColor,
         body: data.when(
             skipLoadingOnRefresh: true,
             skipLoadingOnReload: true,

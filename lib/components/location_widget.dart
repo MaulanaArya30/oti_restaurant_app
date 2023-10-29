@@ -22,7 +22,7 @@ class LocationWidget extends StatelessWidget {
         padding: const EdgeInsets.all(56),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
-          color: kWidgetColor,
+          color: appColors.widgetColor,
         ),
         height: 280,
         width: double.infinity,
@@ -38,7 +38,7 @@ class LocationWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(24),
-                  color: kWidgetColor,
+                  color: appColors.widgetColor,
                 ),
               ),
             ),

@@ -73,7 +73,7 @@ class PopUpMenu extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(25),
                 decoration: BoxDecoration(
-                  color: kWidgetColor,
+                  color: appColors.widgetColor,
                   borderRadius: BorderRadius.circular(22),
                 ),
                 height: double.infinity,
@@ -158,7 +158,7 @@ class PopUpMenu extends StatelessWidget {
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: kWidgetColor,
+          color: appColors.widgetColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
