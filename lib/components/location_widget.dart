@@ -28,7 +28,6 @@ class LocationWidget extends StatelessWidget {
         width: double.infinity,
         child: Row(
           children: [
-            const SizedBox(width: 25),
             AspectRatio(
               aspectRatio: 1,
               child: Container(
