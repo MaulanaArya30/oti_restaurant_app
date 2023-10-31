@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:restaurant_menu/components/constants.dart';
 
 class LocationWidget extends StatelessWidget {
@@ -21,13 +22,12 @@ class LocationWidget extends StatelessWidget {
         padding: const EdgeInsets.all(56),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
-          color: kWidgetColor,
+          color: appColors.widgetColor,
         ),
         height: 280,
         width: double.infinity,
         child: Row(
           children: [
-            const SizedBox(width: 25),
             AspectRatio(
               aspectRatio: 1,
               child: Container(
@@ -37,7 +37,7 @@ class LocationWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(24),
-                  color: kWidgetColor,
+                  color: appColors.widgetColor,
                 ),
               ),
             ),
@@ -57,4 +57,10 @@ class LocationWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<dynamic> getYourCachedDataFromHive() async {
+  final box = await Hive.openBox('myBox');
+  final cachedData = box.get('myData') as List<dynamic>;
+  return cachedData;
 }

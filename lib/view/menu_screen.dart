@@ -20,7 +20,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
     final selected = useState(0);
 
     return Scaffold(
-        backgroundColor: kBackgroundColor,
+        backgroundColor: appColors.backgroundColor,
         body: data.when(
             skipLoadingOnRefresh: true,
             skipLoadingOnReload: true,
@@ -47,7 +47,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                 const Text(
                                   'List Menu',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: appColors.textColor,
                                     fontSize: 40,
                                     fontFamily: 'JollyLodger',
                                     fontWeight: FontWeight.w400,
@@ -63,7 +63,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                     selected.value = -1;
                                   },
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: appColors.textColor,
                                     fontSize: 16,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w400,
@@ -72,20 +72,24 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                   decoration: InputDecoration(
                                     hintText: 'Nama Menu',
                                     hintStyle: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
+                                      color: appColors.textColor,
+                                      fontSize: 18,
                                       fontFamily: 'Inter',
                                       fontWeight: FontWeight.w400,
                                       height: 1.43,
                                     ),
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                      color: Colors.white,
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: const Icon(
+                                        Icons.search,
+                                        size: 40,
+                                        color: appColors.textColor,
+                                      ),
                                     ),
                                     filled: true,
-                                    fillColor: const Color(0xFF4F4F4F),
+                                    fillColor: appColors.searchbarColor,
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(100),
+                                      borderRadius: BorderRadius.circular(80),
                                       borderSide: BorderSide.none,
                                     ),
                                   ),
@@ -146,7 +150,10 @@ class MenuScreenWithHook extends HookConsumerWidget {
                               onPressed: () => {
                                     Supabase.instance.client.auth.signOut(),
                                   },
-                              child: const Text('Sign Out'))
+                              child: const Text(
+                                'Sign Out',
+                                style: TextStyle(color: appColors.textColor),
+                              ))
                         ],
                       ),
                     ),
@@ -160,143 +167,3 @@ class MenuScreenWithHook extends HookConsumerWidget {
                 )));
   }
 }
-// class MenuScreen extends StatefulWidget {
-//   const MenuScreen({super.key});
-
-//   @override
-//   State<MenuScreen> createState() => _MenuScreenState();
-// }
-
-// class _MenuScreenState extends State<MenuScreen> {
-//   String? searchController;
-
-//   int _index = 0;
-//   final screens = [
-//     const PromoScreen(),
-//     const FoodScreen(),
-//     const BeveragesScreen(),
-//     const AlcoholScreen(),
-//     const SearchScreen(),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: kBackgroundColor,
-//       body: SingleChildScrollView(
-//         child: Center(
-//           child: Column(
-//             children: [
-//               Padding(
-//                 padding: EdgeInsets.only(
-//                   top: kDefaultPadding,
-//                   left: kDefaultPadding,
-//                   right: kDefaultPadding,
-//                 ),
-//                 child: Column(
-//                   children: [
-//                     const Text(
-//                       'List Menu',
-//                       style: TextStyle(
-//                         color: Colors.white,
-//                         fontSize: 40,
-//                         fontFamily: 'JollyLodger',
-//                         fontWeight: FontWeight.w400,
-//                         letterSpacing: 3,
-//                       ),
-//                     ),
-//                     const SizedBox(height: 24),
-//                     TextField(
-//                       onChanged: (value) {
-//                         setState(() {
-//                           _index = 4;
-//                         });
-//                         searchController = value;
-//                       },
-//                       style: const TextStyle(
-//                         color: Colors.white,
-//                         fontSize: 16,
-//                         fontFamily: 'Inter',
-//                         fontWeight: FontWeight.w400,
-//                         height: 1.43,
-//                       ),
-//                       decoration: InputDecoration(
-//                         hintText: 'Nama Menu',
-//                         hintStyle: const TextStyle(
-//                           color: Colors.white,
-//                           fontSize: 16,
-//                           fontFamily: 'Inter',
-//                           fontWeight: FontWeight.w400,
-//                           height: 1.43,
-//                         ),
-//                         prefixIcon: const Icon(
-//                           Icons.search,
-//                           color: Colors.white,
-//                         ),
-//                         filled: true,
-//                         fillColor: const Color(0xFF4F4F4F),
-//                         border: OutlineInputBorder(
-//                           borderRadius: BorderRadius.circular(100),
-//                           borderSide: BorderSide.none,
-//                         ),
-//                       ),
-//                     ),
-//                     const SizedBox(height: 24),
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       children: [
-//                         MenuButton(
-//                           text: 'Promo',
-//                           isPressed: _index == 0,
-//                           onTap: () {
-//                             setState(() {
-//                               _index = 0;
-//                             });
-//                           },
-//                         ),
-//                         MenuButton(
-//                           text: 'Food',
-//                           isPressed: _index == 1,
-//                           onTap: () {
-//                             setState(() {
-//                               _index = 1;
-//                             });
-//                           },
-//                         ),
-//                         MenuButton(
-//                           text: 'Beverage',
-//                           isPressed: _index == 2,
-//                           onTap: () {
-//                             setState(() {
-//                               _index = 2;
-//                             });
-//                           },
-//                         ),
-//                         MenuButton(
-//                           text: 'Alcohol',
-//                           isPressed: _index == 3,
-//                           onTap: () {
-//                             setState(() {
-//                               _index = 3;
-//                             });
-//                           },
-//                         ),
-//                       ],
-//                     ),
-//                     const SizedBox(height: 30),
-//                   ],
-//                 ),
-//               ),
-//               screens[_index],
-//               TextButton(
-//                   onPressed: () => {
-//                         Supabase.instance.client.auth.signOut(),
-//                       },
-//                   child: const Text('Sign Out'))
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

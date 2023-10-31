@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_menu/components/constants.dart';
 
 class MenuButton extends StatelessWidget {
   const MenuButton({
@@ -16,9 +17,9 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        foregroundColor: isPressed ? const Color(0xFFFAD05A) : Colors.white,
+        foregroundColor: isPressed ? appColors.buttonColor : Colors.white,
         backgroundColor: isPressed
-            ? const Color(0xFFFAD05A).withOpacity(0.2)
+            ? appColors.buttonColor.withOpacity(0.2)
             : Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -26,7 +27,13 @@ class MenuButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       onPressed: onTap,
-      child: Text(text),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     );
   }
 }
