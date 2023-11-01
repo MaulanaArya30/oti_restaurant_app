@@ -23,12 +23,10 @@ class LocationScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(storeProvider);
-    final theme = ref.watch(themeResponseProvider);
+    final theme = ref.watch(appThemeProvider);
     return theme.when(
       data: (theme) => Scaffold(
-        backgroundColor: theme?.background != null
-            ? HexColor.fromHex(theme!.background!)
-            : AppColor.backgroundColor,
+        backgroundColor: theme.background,
         body: Padding(
           padding: const EdgeInsets.all(60),
           child: SingleChildScrollView(

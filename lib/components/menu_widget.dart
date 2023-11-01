@@ -64,7 +64,7 @@ class PopUpMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeResponseProvider);
+    final theme = ref.watch(appThemeProvider);
     return theme.when(
       data: (theme) => InkWell(
         onTap: () {
@@ -78,7 +78,7 @@ class PopUpMenu extends ConsumerWidget {
                 child: Container(
                   padding: const EdgeInsets.all(25),
                   decoration: BoxDecoration(
-                    color: AppColor.widgetColor,
+                    color: theme.card,
                     borderRadius: BorderRadius.circular(22),
                   ),
                   height: double.infinity,
@@ -111,9 +111,7 @@ class PopUpMenu extends ConsumerWidget {
                                 Text(
                                   menu.title ?? "",
                                   style: TextStyle(
-                                    color: theme?.foreground != null
-                                        ? HexColor.fromHex(theme!.foreground!)
-                                        : AppColor.textColor,
+                                    color: theme.foreground,
                                     fontSize: 32,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -121,9 +119,7 @@ class PopUpMenu extends ConsumerWidget {
                                 Text(
                                   'Rp. ${menu.price}',
                                   style: TextStyle(
-                                    color: theme?.foreground != null
-                                        ? HexColor.fromHex(theme!.foreground!)
-                                        : AppColor.textColor,
+                                    color: theme.foreground,
                                     fontSize: 32,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -139,10 +135,7 @@ class PopUpMenu extends ConsumerWidget {
                                     menu.description ?? "",
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
-                                      color: theme?.foreground != null
-                                          ? HexColor.fromHex(theme!.foreground!)
-                                              .withOpacity(0.6)
-                                          : AppColor.textColor.withOpacity(0.6),
+                                      color: theme.foreground.withOpacity(0.6),
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -159,11 +152,7 @@ class PopUpMenu extends ConsumerWidget {
                                   child: Text(
                                     'Back',
                                     style: TextStyle(
-                                      fontSize: 24,
-                                      color: theme?.primary != null
-                                          ? HexColor.fromHex(theme!.primary!)
-                                          : AppColor.buttonColor,
-                                    ),
+                                        fontSize: 24, color: theme.primary),
                                   ),
                                 ),
                               ),
@@ -181,11 +170,7 @@ class PopUpMenu extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: theme?.background != null
-                ? HexColor.fromHex(theme!.background!)
-                : AppColor.widgetColor,
-          ),
+              borderRadius: BorderRadius.circular(16), color: theme.background),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
