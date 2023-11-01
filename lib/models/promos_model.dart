@@ -1,8 +1,8 @@
 class Promo {
-  int id;
-  String thumbnail;
-  bool visible;
-  String userId;
+  int? id;
+  String? thumbnail;
+  bool? visible;
+  String? userId;
 
   Promo({
     required this.id,

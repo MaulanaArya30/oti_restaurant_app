@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:restaurant_menu/providers/hive_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
 import '../models/category_model.dart';
@@ -6,35 +7,108 @@ import '../models/menu_model.dart';
 import '../models/promos_model.dart';
 import '../models/view_model.dart';
 
-final promoProvider = FutureProvider.autoDispose<List<Promo>>((ref) {
+final promoProvider = FutureProvider.autoDispose<List<Promo>>((ref) async {
   final supabase = sb.Supabase.instance.client;
+  final box = ref.read(hiveProvider);
 
-  return supabase.from("promos").select("*").eq('visible', true).then((value) {
-    final data = value as List<dynamic>;
-    final promos = data.map((e) => Promo.fromJson(e)).toList();
+  try {
+    final promosResponse = await supabase
+        .from("promos")
+        .select("*")
+        .eq('visible', true)
+        .order('item_order', ascending: true);
+
+    if (promosResponse != null) {
+      box.put("cachedPromoDataKey", promosResponse);
+    }
+
+    final promos = promosResponse.map((e) => Promo.fromJson(e)).toList();
 
     return promos;
-  });
+  } catch (error) {
+    // Handle the network error here
+    // You can log the error or perform any other necessary actions.
+
+    // Try to retrieve cached data from the box
+    final cachedData = box.get("cachedPromoDataKey");
+
+    if (cachedData != null) {
+      return cachedData.map((e) => Promo.fromJson(e)).toList();
+    } else {
+      return []; // Return null or handle the error as needed
+    }
+  }
 });
 
-final categoryProvider = FutureProvider.autoDispose<List<Category>>((ref) {
+final categoryProvider =
+    FutureProvider.autoDispose<List<Category>>((ref) async {
   final supabase = sb.Supabase.instance.client;
+  final box = ref.read(hiveProvider);
 
-  return supabase.from("categories").select("*").then((value) {
-    final data = value as List<dynamic>;
-    final categories = data.map((e) => Category.fromJson(e)).toList();
+  try {
+    final categoriesResponse = await supabase
+        .from("categories")
+        .select("*")
+        .order('item_order', ascending: true);
+
+    if (categoriesResponse != null) {
+      box.put("cachedCategoryDataKey", categoriesResponse);
+    }
+
+    final categories =
+        categoriesResponse.map((e) => Category.fromJson(e)).toList();
+
+    // Cache the data if fetched successfully
+
     return categories;
-  });
+  } catch (error) {
+    // Handle the network error here
+    // You can log the error or perform any other necessary actions.
+
+    // Try to retrieve cached data from the box
+    final cachedData = box.get("cachedCategoryDataKey");
+
+    if (cachedData != null) {
+      return cachedData.map((e) => Category.fromJson(e)).toList();
+    } else {
+      return []; // Return null or handle the error as needed
+    }
+  }
 });
 
-final menuProvider = FutureProvider.autoDispose<List<Menu>>((ref) {
+final menuProvider = FutureProvider.autoDispose<List<Menu>>((ref) async {
   final supabase = sb.Supabase.instance.client;
+  final box = ref.read(hiveProvider);
 
-  return supabase.from("menu").select("*").eq('visible', true).then((value) {
-    final data = value as List<dynamic>;
-    final menus = data.map((e) => Menu.fromJson(e)).toList();
+  try {
+    final menusResponse = await supabase
+        .from("menu")
+        .select("*")
+        .eq('visible', true)
+        .order('item_order', ascending: true);
+
+    if (menusResponse != null) {
+      box.put("cachedMenuDataKey", menusResponse);
+    }
+
+    final menus = menusResponse.map((e) => Menu.fromJson(e)).toList();
+
+    // Cache the data if fetched successfully
+
     return menus;
-  });
+  } catch (error) {
+    // Handle the network error here
+    // You can log the error or perform any other necessary actions.
+
+    // Try to retrieve cached data from the box
+    final cachedData = box.get("cachedMenuDataKey");
+
+    if (cachedData != null) {
+      return cachedData.map((e) => Menu.fromJson(e)).toList();
+    } else {
+      return []; // Return null or handle the error as needed
+    }
+  }
 });
 
 final dataProvider = FutureProvider.autoDispose<ViewModel>((ref) async {
@@ -54,8 +128,8 @@ final dataProvider = FutureProvider.autoDispose<ViewModel>((ref) async {
       promos: promos as List<Promo>);
 });
 
-final menuInCategoryProvider =
-    Provider.autoDispose.family<AsyncValue<List<Menu>>, int>((ref, categoryId) {
+final menuInCategoryProvider = Provider.autoDispose
+    .family<AsyncValue<List<Menu>>, String>((ref, categoryId) {
   final menu = ref.watch(menuProvider);
 
   return menu.whenData((value) {

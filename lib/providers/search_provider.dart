@@ -16,8 +16,8 @@ class SearchNotifier extends AutoDisposeNotifier<AsyncValue<List<Menu>>> {
     final search = ref.watch(searchBarProvider);
 
     final searchedMenu = data.whenData((data) => data.menus
-        .where(
-            (menu) => menu.title.toLowerCase().contains(search.toLowerCase()))
+        .where((menu) =>
+            menu.title?.toLowerCase().contains(search.toLowerCase()) ?? false)
         .toList());
     return searchedMenu;
   }

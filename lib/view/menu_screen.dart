@@ -17,7 +17,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(dataProvider);
-    final selected = useState(0);
+    final selected = useState('0');
 
     return Scaffold(
         backgroundColor: appColors.backgroundColor,
@@ -26,10 +26,11 @@ class MenuScreenWithHook extends HookConsumerWidget {
             skipLoadingOnReload: true,
             data: (data) => RefreshIndicator(
                   onRefresh: () async {
-                    if (selected.value == 0)
+                    if (selected.value == '0') {
                       ref.invalidate(promoProvider);
-                    else
+                    } else {
                       ref.invalidate(menuProvider);
+                    }
                   },
                   child: SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
@@ -60,7 +61,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                       .read(searchBarProvider.notifier)
                                       .state = value,
                                   onTap: () {
-                                    selected.value = -1;
+                                    selected.value = '-1';
                                   },
                                   style: const TextStyle(
                                     color: appColors.textColor,
@@ -106,9 +107,10 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                         if (index == 0) {
                                           return MenuButton(
                                             text: 'Promo',
-                                            isPressed: index == selected.value,
+                                            isPressed: index.toString() ==
+                                                selected.value,
                                             onTap: () {
-                                              selected.value = 0;
+                                              selected.value = '0';
                                             },
                                           );
                                         }
@@ -117,22 +119,24 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                             data.categories.length + 1) {
                                           return MenuButton(
                                             text: 'All',
-                                            isPressed: selected.value == -1,
+                                            isPressed: selected.value == '-1',
                                             onTap: () {
-                                              selected.value = -1;
+                                              selected.value = '-1';
                                             },
                                           );
                                         }
 
                                         return MenuButton(
-                                          text:
-                                              data.categories[index - 1].title,
+                                          text: data.categories[index - 1]
+                                                  .title ??
+                                              "",
                                           isPressed:
                                               data.categories[index - 1].id ==
                                                   selected.value,
                                           onTap: () {
                                             selected.value =
-                                                data.categories[index - 1].id;
+                                                data.categories[index - 1].id ??
+                                                    "";
                                           },
                                         );
                                       })),
@@ -141,19 +145,19 @@ class MenuScreenWithHook extends HookConsumerWidget {
                               ],
                             ),
                           ),
-                          (selected.value == 0)
+                          (selected.value == '0')
                               ? PromoScreen(promos: data.promos)
-                              : (selected.value == -1)
+                              : (selected.value == '-1')
                                   ? const SearchScreen()
                                   : FoodScreen(categoryId: selected.value),
-                          TextButton(
-                              onPressed: () => {
-                                    Supabase.instance.client.auth.signOut(),
-                                  },
-                              child: const Text(
-                                'Sign Out',
-                                style: TextStyle(color: appColors.textColor),
-                              ))
+                          // TextButton(
+                          //     onPressed: () => {
+                          //           Supabase.instance.client.auth.signOut(),
+                          //         },
+                          //     child: const Text(
+                          //       'Sign Out',
+                          //       style: TextStyle(color: appColors.textColor),
+                          //     ))
                         ],
                       ),
                     ),

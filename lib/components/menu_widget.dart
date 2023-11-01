@@ -19,7 +19,7 @@ class MenuWidget extends StatelessWidget {
           margin: const EdgeInsets.all(15),
           child: PopUpMenu(menu: menu),
         ),
-        menu.soldOut
+        menu.soldOut ?? false
             ? Container(
                 margin: const EdgeInsets.all(15),
                 padding: const EdgeInsets.all(25),
@@ -87,7 +87,7 @@ class PopUpMenu extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
                           image: DecorationImage(
-                            image: NetworkImage(menu.thumbnail),
+                            image: NetworkImage(menu.thumbnail ?? ""),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -104,7 +104,7 @@ class PopUpMenu extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                menu.title,
+                                menu.title ?? "",
                                 style: const TextStyle(
                                   color: appColors.textColor,
                                   fontSize: 32,
@@ -113,7 +113,7 @@ class PopUpMenu extends StatelessWidget {
                               ),
                               Text(
                                 'Rp. ${menu.price}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: appColors.textColor,
                                   fontSize: 32,
                                   fontWeight: FontWeight.w500,
@@ -144,7 +144,7 @@ class PopUpMenu extends StatelessWidget {
                               alignment: Alignment.bottomCenter,
                               child: InkWell(
                                 onTap: () => Navigator.pop(context),
-                                child: Text(
+                                child: const Text(
                                   'Back',
                                   style: TextStyle(
                                     fontSize: 24,
@@ -174,7 +174,7 @@ class PopUpMenu extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              menu.title,
+              menu.title ?? "",
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,

@@ -5,7 +5,7 @@ import 'package:restaurant_menu/components/menu_widget.dart';
 import 'package:restaurant_menu/providers/data_provider.dart';
 
 class FoodScreen extends ConsumerWidget {
-  final int categoryId;
+  final String categoryId;
 
   const FoodScreen({super.key, required this.categoryId});
 

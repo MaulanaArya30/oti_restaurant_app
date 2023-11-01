@@ -22,7 +22,7 @@ class PromoWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           //color: Color(0xFFE5E7EB),
           image: DecorationImage(
-            image: NetworkImage(promo.thumbnail),
+            image: NetworkImage(promo.thumbnail ?? ""),
             fit: BoxFit.cover,
           ),
         ),

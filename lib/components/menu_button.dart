@@ -29,7 +29,7 @@ class MenuButton extends StatelessWidget {
       onPressed: onTap,
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),

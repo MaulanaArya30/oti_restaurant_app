@@ -1,12 +1,12 @@
 class Menu {
-  String id;
-  String title;
-  int price;
-  String thumbnail;
-  int categoryId;
-  bool visible;
-  bool soldOut;
-  String userId;
+  String? id;
+  String? title;
+  int? price;
+  String? thumbnail;
+  String? categoryId;
+  bool? visible;
+  bool? soldOut;
+  String? userId;
 
   Menu({
     required this.id,
