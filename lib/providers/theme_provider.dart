@@ -8,7 +8,7 @@ import 'package:restaurant_menu/utils/extension.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
-final appThemeProvider = FutureProvider<AppColorTheme>((ref) async {
+final appThemeProvider = FutureProvider.autoDispose<AppColorTheme>((ref) async {
   final supabase = sb.Supabase.instance.client;
   final box = ref.watch(hiveProvider);
 
