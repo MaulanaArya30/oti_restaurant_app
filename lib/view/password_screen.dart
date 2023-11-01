@@ -91,7 +91,7 @@ class PasswordScreen extends HookConsumerWidget {
                       minWidth: 103,
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 24),
-                      color: appColors.buttonColor,
+                      color: AppColor.buttonColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                       ),

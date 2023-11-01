@@ -13,14 +13,14 @@ double kMenuAspectRatio = 600 / 80;
 
 //Color kWidgetColor = const Color(0xFF27282A);
 
-class appColors {
-  static const backgroundColor = const Color(0xFF1C1D1F);
-  static const widgetColor = const Color(0xFF27282A);
-  static const buttonColor = const Color(0xFFFAD05A);
-  static const textColor = Colors.white;
-  static const searchbarColor = const Color(0xFF4F4F4F);
+class AppColor {
+  static var backgroundColor = Color(0xFF1C1D1F);
+  static var widgetColor = Color(0xFF27282A);
+  static var buttonColor = Color(0xFFFAD05A);
+  static var textColor = Colors.white;
+  static var searchbarColor = const Color(0xFF4F4F4F);
 
-  static const TextStyle titleStyle = const TextStyle(
+  static TextStyle titleStyle = TextStyle(
     color: textColor,
     fontSize: 48,
     fontFamily: 'JollyLodger',

@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:restaurant_menu/components/constants.dart';
+import 'package:restaurant_menu/providers/theme_provider.dart';
+import 'package:restaurant_menu/utils/extension.dart';
 
 import '../models/menu_model.dart';
 
@@ -51,7 +54,7 @@ class MenuWidget extends StatelessWidget {
   }
 }
 
-class PopUpMenu extends StatelessWidget {
+class PopUpMenu extends ConsumerWidget {
   const PopUpMenu({
     super.key,
     required this.menu,
@@ -60,138 +63,156 @@ class PopUpMenu extends StatelessWidget {
   final Menu menu;
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(25),
-                decoration: BoxDecoration(
-                  color: appColors.widgetColor,
-                  borderRadius: BorderRadius.circular(22),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeResponseProvider);
+    return theme.when(
+      data: (theme) => InkWell(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
                 ),
-                height: double.infinity,
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 8,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          image: DecorationImage(
-                            image: NetworkImage(menu.thumbnail ?? ""),
-                            fit: BoxFit.cover,
+                child: Container(
+                  padding: const EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                    color: AppColor.widgetColor,
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            image: DecorationImage(
+                              image: NetworkImage(menu.thumbnail ?? ""),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 25),
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                menu.title ?? "",
-                                style: const TextStyle(
-                                  color: appColors.textColor,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                'Rp. ${menu.price}',
-                                style: const TextStyle(
-                                  color: appColors.textColor,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  textAlign: TextAlign.start,
-                                  'Descriptio Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in lectus vel dolor pulvinar efficitur. Sed non ligula at velit eleifend viverra eu eget sapien. Vivamus hendrerit enim vel mauris lacinia, id fringilla justo luctus. ',
+                      const SizedBox(height: 25),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  menu.title ?? "",
                                   style: TextStyle(
-                                    color: appColors.textColor.withOpacity(0.6),
-                                    fontSize: 20,
+                                    color: theme?.foreground != null
+                                        ? HexColor.fromHex(theme!.foreground!)
+                                        : AppColor.textColor,
+                                    fontSize: 32,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              alignment: Alignment.bottomCenter,
-                              child: InkWell(
-                                onTap: () => Navigator.pop(context),
-                                child: const Text(
-                                  'Back',
+                                Text(
+                                  'Rp. ${menu.price}',
                                   style: TextStyle(
-                                    fontSize: 24,
-                                    color: appColors.buttonColor,
+                                    color: theme?.foreground != null
+                                        ? HexColor.fromHex(theme!.foreground!)
+                                        : AppColor.textColor,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: SingleChildScrollView(
+                                  child: Text(
+                                    menu.description ?? "",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      color: theme?.foreground != null
+                                          ? HexColor.fromHex(theme!.foreground!)
+                                              .withOpacity(0.6)
+                                          : AppColor.textColor.withOpacity(0.6),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                alignment: Alignment.bottomCenter,
+                                child: InkWell(
+                                  onTap: () => Navigator.pop(context),
+                                  child: Text(
+                                    'Back',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: theme?.primary != null
+                                          ? HexColor.fromHex(theme!.primary!)
+                                          : AppColor.buttonColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.all(25),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: theme?.background != null
+                ? HexColor.fromHex(theme!.background!)
+                : AppColor.widgetColor,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                menu.title ?? "",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-            );
-          },
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(25),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: appColors.widgetColor,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              menu.title ?? "",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
+              Text(
+                'Rp. ${menu.price}',
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.6),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            Text(
-              'Rp. ${menu.price}',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+      loading: () => Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (error, stackTrace) => Text(error.toString()),
     );
   }
 }

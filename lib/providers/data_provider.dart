@@ -16,21 +16,21 @@ final promoProvider = FutureProvider.autoDispose<List<Promo>>((ref) async {
         .from("promos")
         .select("*")
         .eq('visible', true)
-        .order('item_order', ascending: true);
+        .order('item_order', ascending: true) as List<dynamic>?;
 
     if (promosResponse != null) {
       box.put("cachedPromoDataKey", promosResponse);
     }
 
-    final promos = promosResponse.map((e) => Promo.fromJson(e)).toList();
+    final promos = promosResponse?.map((e) => Promo.fromJson(e)).toList();
 
-    return promos;
+    return promos ?? [];
   } catch (error) {
     // Handle the network error here
     // You can log the error or perform any other necessary actions.
 
     // Try to retrieve cached data from the box
-    final cachedData = box.get("cachedPromoDataKey");
+    final cachedData = box.get("cachedPromoDataKey") as List<dynamic>?;
 
     if (cachedData != null) {
       return cachedData.map((e) => Promo.fromJson(e)).toList();
@@ -49,24 +49,26 @@ final categoryProvider =
     final categoriesResponse = await supabase
         .from("categories")
         .select("*")
-        .order('item_order', ascending: true);
+        .order('item_order', ascending: true) as List<dynamic>?;
 
     if (categoriesResponse != null) {
       box.put("cachedCategoryDataKey", categoriesResponse);
     }
 
     final categories =
-        categoriesResponse.map((e) => Category.fromJson(e)).toList();
+        categoriesResponse?.map((e) => Category.fromJson(e)).toList();
 
     // Cache the data if fetched successfully
 
-    return categories;
+    return categories ?? [];
   } catch (error) {
+    print(error);
+
     // Handle the network error here
     // You can log the error or perform any other necessary actions.
 
     // Try to retrieve cached data from the box
-    final cachedData = box.get("cachedCategoryDataKey");
+    final cachedData = box.get("cachedCategoryDataKey") as List<dynamic>?;
 
     if (cachedData != null) {
       return cachedData.map((e) => Category.fromJson(e)).toList();
@@ -85,23 +87,23 @@ final menuProvider = FutureProvider.autoDispose<List<Menu>>((ref) async {
         .from("menu")
         .select("*")
         .eq('visible', true)
-        .order('item_order', ascending: true);
+        .order('item_order', ascending: true) as List<dynamic>?;
 
     if (menusResponse != null) {
       box.put("cachedMenuDataKey", menusResponse);
     }
 
-    final menus = menusResponse.map((e) => Menu.fromJson(e)).toList();
+    final menus = menusResponse?.map((e) => Menu.fromJson(e)).toList();
 
     // Cache the data if fetched successfully
 
-    return menus;
+    return menus ?? [];
   } catch (error) {
     // Handle the network error here
     // You can log the error or perform any other necessary actions.
 
     // Try to retrieve cached data from the box
-    final cachedData = box.get("cachedMenuDataKey");
+    final cachedData = box.get("cachedMenuDataKey") as List<dynamic>?;
 
     if (cachedData != null) {
       return cachedData.map((e) => Menu.fromJson(e)).toList();
