@@ -170,7 +170,7 @@ class PopUpMenu extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16), color: theme.background),
+              borderRadius: BorderRadius.circular(16), color: theme.card),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

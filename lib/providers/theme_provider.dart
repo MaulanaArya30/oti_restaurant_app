@@ -23,6 +23,8 @@ final appThemeProvider = FutureProvider<AppColorTheme>((ref) async {
   final border = theme.border;
   final card = theme.card;
 
+  print("card $card");
+
   return AppColorTheme(
     background: background != null
         ? HexColor.fromHex(background)
