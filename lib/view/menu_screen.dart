@@ -176,14 +176,16 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                   : (selected.value == '-1')
                                       ? const SearchScreen()
                                       : FoodScreen(categoryId: selected.value),
-                              // TextButton(
-                              //     onPressed: () => {
-                              //           Supabase.instance.client.auth.signOut(),
-                              //         },
-                              //     child: const Text(
-                              //       'Sign Out',
-                              //       style: TextStyle(color: AppColors.textColor),
-                              //     ))
+                              TextButton(
+                                  onPressed: () => {
+                                        Supabase.instance.client.auth.signOut(),
+                                      },
+                                  child: Text(
+                                    'Sign Out',
+                                    style: TextStyle(
+                                      color: AppColor.buttonColor,
+                                    ),
+                                  ))
                             ],
                           ),
                         ),

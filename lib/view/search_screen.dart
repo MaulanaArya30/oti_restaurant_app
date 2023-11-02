@@ -12,30 +12,44 @@ class SearchScreen extends ConsumerWidget {
     final searchedMenu = ref.watch(searchNotifierProvider);
 
     return searchedMenu.when(
-      data: (menus) => GridView.builder(
+      data: (menus) => ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)
             .copyWith(bottom: kDefaultPadding),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: kMenuAspectRatio,
-          crossAxisCount: 1,
-        ),
         itemCount: menus.length,
         itemBuilder: (context, index) {
-          // if (widget.searchController == null) {
-          //   return _totalList[index];
-          // } else if (_totalList[index]
-          //     .name
-          //     .toLowerCase()
-          //     .contains(widget.searchController!.toLowerCase())) {
-          //   return _totalList[index];
-          // } else {
-          //   return SizedBox();
-          // }
-          return MenuWidget(menu: menus[index]);
+          return Container(
+            constraints: BoxConstraints(
+                minHeight: 100, maxHeight: 100), // Set the minHeight
+            child: MenuWidget(menu: menus[index]),
+          );
         },
       ),
+      // GridView.builder(
+      //   shrinkWrap: true,
+      //   physics: const NeverScrollableScrollPhysics(),
+      //   padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)
+      //       .copyWith(bottom: kDefaultPadding),
+      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //     childAspectRatio: kMenuAspectRatio,
+      //     crossAxisCount: 1,
+      //   ),
+      //   itemCount: menus.length,
+      //   itemBuilder: (context, index) {
+      //     // if (widget.searchController == null) {
+      //     //   return _totalList[index];
+      //     // } else if (_totalList[index]
+      //     //     .name
+      //     //     .toLowerCase()
+      //     //     .contains(widget.searchController!.toLowerCase())) {
+      //     //   return _totalList[index];
+      //     // } else {
+      //     //   return SizedBox();
+      //     // }
+      //     return MenuWidget(menu: menus[index]);
+      //   },
+      // ),
       error: (err, stacktrace) => Container(),
       loading: () => Center(child: CircularProgressIndicator()),
     );

@@ -18,7 +18,7 @@ class MenuWidget extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 150,
+          height: 100,
           margin: const EdgeInsets.all(15),
           child: PopUpMenu(menu: menu),
         ),

@@ -26,10 +26,11 @@ class LocationWidget extends ConsumerWidget {
           margin: const EdgeInsets.only(bottom: 32),
           padding: const EdgeInsets.all(56),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-              color: theme?.background != null
-                  ? HexColor.fromHex(theme!.background!)
-                  : AppColor.widgetColor),
+            borderRadius: BorderRadius.circular(32),
+            color: theme?.background != null
+                ? HexColor.fromHex(theme!.background!)
+                : AppColor.widgetColor,
+          ),
           height: 280,
           width: double.infinity,
           child: Row(
@@ -52,8 +53,8 @@ class LocationWidget extends ConsumerWidget {
               const SizedBox(width: 40),
               Text(
                 locationName,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: AppColor.textColor,
                   fontSize: 32,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w500,
