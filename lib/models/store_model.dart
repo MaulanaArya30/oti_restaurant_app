@@ -1,16 +1,16 @@
 class StoreModel {
-  int id;
-  String storeName;
-  String thumbnail;
-  String email;
-  String userId;
+  int? id;
+  String? storeName;
+  String? thumbnail;
+  String? email;
+  String? userId;
 
   StoreModel({
-    required this.id,
-    required this.storeName,
-    required this.thumbnail,
-    required this.email,
-    required this.userId,
+    this.id,
+    this.storeName,
+    this.thumbnail,
+    this.email,
+    this.userId,
   });
 
   factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
