@@ -62,7 +62,7 @@ Future<ThemeModel?> getTheme(sb.SupabaseClient supabase, Box box) async {
 
     return theme;
   } catch (error) {
-    final cachedData = box.get("cachedPromoDataKey") as Map<String, dynamic>?;
+    final cachedData = box.get("cachedThemeDataKey") as Map<String, dynamic>?;
 
     if (cachedData != null) {
       return ThemeModel.fromJson(cachedData);
