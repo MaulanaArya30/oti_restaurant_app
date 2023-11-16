@@ -27,14 +27,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
         debugShowCheckedModeBanner: false,
         // theme: ThemeData(
         //     colorScheme: Theme.of(context).colorScheme.copyWith(
         //           primary: const Color(0xFFFAD05A),
         //         )),
         title: 'RestaurantMenuApp',
-        home: const AuthChecker());
+        home: AuthChecker());
   }
 }
 

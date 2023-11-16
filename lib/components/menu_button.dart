@@ -18,20 +18,13 @@ class MenuButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeResponseProvider);
+    final theme = ref.watch(appThemeProvider);
     return theme.when(
       data: (theme) => TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: isPressed
-              ? theme?.primary != null
-                  ? HexColor.fromHex(theme!.primary!)
-                  : AppColor.buttonColor
-              : Colors.white,
-          backgroundColor: isPressed
-              ? theme?.primary != null
-                  ? HexColor.fromHex(theme!.primary!).withOpacity(0.2)
-                  : AppColor.buttonColor.withOpacity(0.2)
-              : Colors.transparent,
+          foregroundColor: isPressed ? theme.primary : Colors.white,
+          backgroundColor:
+              isPressed ? theme.primary.withOpacity(0.2) : Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),

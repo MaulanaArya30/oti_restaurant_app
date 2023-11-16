@@ -20,13 +20,11 @@ class MenuScreenWithHook extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(dataProvider);
     final selected = useState('0');
-    final theme = ref.watch(themeResponseProvider);
+    final theme = ref.watch(appThemeProvider);
 
     return theme.when(
         data: (theme) => Scaffold(
-            backgroundColor: theme?.background != null
-                ? HexColor.fromHex(theme!.background!)
-                : AppColor.backgroundColor,
+            backgroundColor: theme.background,
             body: data.when(
                 skipLoadingOnRefresh: true,
                 skipLoadingOnReload: true,
@@ -54,10 +52,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                     Text(
                                       'List Menu',
                                       style: TextStyle(
-                                        color: theme?.foreground != null
-                                            ? HexColor.fromHex(
-                                                theme?.foreground ?? "#ffffff")
-                                            : AppColor.textColor,
+                                        color: theme.foreground,
                                         fontSize: 40,
                                         fontFamily: 'JollyLodger',
                                         fontWeight: FontWeight.w400,
@@ -73,10 +68,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                         selected.value = '-1';
                                       },
                                       style: TextStyle(
-                                        color: theme?.foreground != null
-                                            ? HexColor.fromHex(
-                                                theme?.foreground ?? "#ffffff")
-                                            : AppColor.textColor,
+                                        color: theme.foreground,
                                         fontSize: 16,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w400,
@@ -85,11 +77,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                       decoration: InputDecoration(
                                         hintText: 'Nama Menu',
                                         hintStyle: TextStyle(
-                                          color: theme?.foreground != null
-                                              ? HexColor.fromHex(
-                                                  theme?.foreground ??
-                                                      "#ffffff")
-                                              : AppColor.textColor,
+                                          color: theme.foreground,
                                           fontSize: 18,
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w400,
@@ -97,20 +85,12 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                         ),
                                         prefixIcon: Padding(
                                           padding: EdgeInsets.only(left: 20),
-                                          child: Icon(
-                                            Icons.search,
-                                            size: 40,
-                                            color: theme?.foreground != null
-                                                ? HexColor.fromHex(
-                                                    theme?.foreground ??
-                                                        "#ffffff")
-                                                : AppColor.textColor,
-                                          ),
+                                          child: Icon(Icons.search,
+                                              size: 40,
+                                              color: theme.foreground),
                                         ),
                                         filled: true,
-                                        fillColor: theme?.foreground != null
-                                            ? HexColor.fromHex(theme!.border!)
-                                            : AppColor.searchbarColor,
+                                        fillColor: theme.border,
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(80),

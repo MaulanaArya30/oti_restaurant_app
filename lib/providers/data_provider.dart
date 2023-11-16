@@ -62,8 +62,6 @@ final categoryProvider =
 
     return categories ?? [];
   } catch (error) {
-    print(error);
-
     // Handle the network error here
     // You can log the error or perform any other necessary actions.
 

@@ -18,7 +18,8 @@ class LocationWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeResponseProvider);
+    final theme = ref.watch(appThemeProvider);
+
     return theme.when(
       data: (theme) => GestureDetector(
         onTap: onPressed,
@@ -26,11 +27,15 @@ class LocationWidget extends ConsumerWidget {
           margin: const EdgeInsets.only(bottom: 32),
           padding: const EdgeInsets.all(56),
           decoration: BoxDecoration(
+<<<<<<< HEAD
             borderRadius: BorderRadius.circular(32),
             color: theme?.background != null
                 ? HexColor.fromHex(theme!.background!)
                 : AppColor.widgetColor,
           ),
+=======
+              borderRadius: BorderRadius.circular(32), color: theme.card),
+>>>>>>> 3ab5c2c3f792e27238c3d0ffabfd1de33950c85c
           height: 280,
           width: double.infinity,
           child: Row(
@@ -39,15 +44,12 @@ class LocationWidget extends ConsumerWidget {
                 aspectRatio: 1,
                 child: Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(thumbnail),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(24),
-                    color: theme?.background != null
-                        ? HexColor.fromHex(theme!.background!)
-                        : AppColor.widgetColor,
-                  ),
+                      image: DecorationImage(
+                        image: NetworkImage(thumbnail),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(24),
+                      color: theme.card),
                 ),
               ),
               const SizedBox(width: 40),
