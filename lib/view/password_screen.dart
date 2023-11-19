@@ -30,6 +30,10 @@ class PasswordScreen extends HookConsumerWidget {
           borderRadius: BorderRadius.circular(32),
         ),
         child: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFF1d1e20),
+              borderRadius: BorderRadius.circular(32),
+            ),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             height: 360,
             width: 416,
@@ -37,35 +41,30 @@ class PasswordScreen extends HookConsumerWidget {
               key: formKey,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 22, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE5E7EB),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child:
-                          const Icon(Icons.lock, color: Colors.black, size: 32),
-                    ),
+                    const Icon(Icons.lock, color: Colors.white, size: 32),
                     const SizedBox(height: 24),
                     const Text(
                       'Masukan Password',
                       style: TextStyle(
-                        color: Color(0xFF111827),
-                        fontSize: 20,
+                        color: Colors.white,
+                        fontSize: 24,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 24),
                     TextFormField(
+                      style: TextStyle(color: Colors.white),
                       controller: passwordController,
                       obscureText: obscureText.value,
                       validator: (value) =>
                           value!.isEmpty ? 'Password is required' : null,
                       autofocus: true,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFF505153),
                         errorText: errorText.value,
                         suffixIcon: GestureDetector(
                           onTap: toggle,
@@ -78,7 +77,7 @@ class PasswordScreen extends HookConsumerWidget {
                         ),
                         hintText: 'Password',
                         hintStyle: const TextStyle(
-                          color: Color(0xFF6B7280),
+                          color: Color(0xFFfbfcfc),
                           fontSize: 16,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -87,7 +86,7 @@ class PasswordScreen extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 24),
                     MaterialButton(
-                      height: 40,
+                      height: 50,
                       minWidth: 103,
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 24),
@@ -114,7 +113,7 @@ class PasswordScreen extends HookConsumerWidget {
                         'Submit',
                         style: TextStyle(
                           color: Color(0xFF111827),
-                          fontSize: 16,
+                          fontSize: 18,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w600,
                           height: 1.25,

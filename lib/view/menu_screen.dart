@@ -49,17 +49,22 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                 ),
                                 child: Column(
                                   children: [
-                                    Text(
-                                      'List Menu',
-                                      style: TextStyle(
-                                        color: theme.foreground,
-                                        fontSize: 40,
-                                        fontFamily: 'JollyLodger',
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: 3,
-                                      ),
+                                    // Text(
+                                    //   'List Menu',
+                                    //   style: TextStyle(
+                                    //     color: Colors.white, //theme.foreground,
+                                    //     fontSize: 40,
+                                    //     fontFamily: 'JollyLodger',
+                                    //     fontWeight: FontWeight.w400,
+                                    //     letterSpacing: 3,
+                                    //   ),
+                                    // ),
+                                    Image.asset(
+                                      'assets/images/logonew.png',
+                                      width: 120,
+                                      height: 120,
                                     ),
-                                    const SizedBox(height: 24),
+                                    const SizedBox(height: 12),
                                     TextField(
                                       onChanged: (value) => ref
                                           .read(searchBarProvider.notifier)

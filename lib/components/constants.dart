@@ -23,7 +23,7 @@ class AppColor {
   static TextStyle titleStyle = TextStyle(
     color: textColor,
     fontSize: 48,
-    fontFamily: 'JollyLodger',
+    fontFamily: 'Philosopher',
     fontWeight: FontWeight.w400,
     letterSpacing: 3.0,
   );
