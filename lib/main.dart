@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         //           primary: const Color(0xFFFAD05A),
         //         )),
         title: 'RestaurantMenuApp',
-        home: MenuScreenWithHook()); //LocationScreen()); //AuthChecker());
+        home: AuthChecker());
   }
 }
 
