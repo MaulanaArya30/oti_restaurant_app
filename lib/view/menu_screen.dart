@@ -36,144 +36,169 @@ class MenuScreenWithHook extends HookConsumerWidget {
                           ref.invalidate(menuProvider);
                         }
                       },
-                      child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: kDefaultPadding,
-                                  left: kDefaultPadding,
-                                  right: kDefaultPadding,
-                                ),
-                                child: Column(
-                                  children: [
-                                    // Text(
-                                    //   'List Menu',
-                                    //   style: TextStyle(
-                                    //     color: Colors.white, //theme.foreground,
-                                    //     fontSize: 40,
-                                    //     fontFamily: 'JollyLodger',
-                                    //     fontWeight: FontWeight.w400,
-                                    //     letterSpacing: 3,
-                                    //   ),
-                                    // ),
-                                    Image.asset(
-                                      'assets/images/logonew.png',
-                                      width: 120,
-                                      height: 120,
-                                    ),
-                                    const SizedBox(height: 12),
-                                    TextField(
-                                      onChanged: (value) => ref
-                                          .read(searchBarProvider.notifier)
-                                          .state = value,
-                                      onTap: () {
-                                        selected.value = '-1';
-                                      },
-                                      style: TextStyle(
-                                        color: theme.foreground,
-                                        fontSize: 16,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.43,
-                                      ),
-                                      decoration: InputDecoration(
-                                        hintText: 'Nama Menu',
-                                        hintStyle: TextStyle(
-                                          color: theme.foreground,
-                                          fontSize: 18,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.43,
-                                        ),
-                                        prefixIcon: Padding(
-                                          padding: EdgeInsets.only(left: 20),
-                                          child: Icon(Icons.search,
-                                              size: 40,
-                                              color: theme.foreground),
-                                        ),
-                                        filled: true,
-                                        fillColor: theme.border,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(80),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 24),
-                                    SizedBox(
-                                      height: 44,
-                                      child: ListView.separated(
-                                          separatorBuilder: (context, index) =>
-                                              const SizedBox(width: 20),
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: data.categories.length + 2,
-                                          itemBuilder: ((context, index) {
-                                            if (index == 0) {
-                                              return MenuButton(
-                                                text: 'Promo',
-                                                isPressed: index.toString() ==
-                                                    selected.value,
-                                                onTap: () {
-                                                  selected.value = '0';
-                                                },
-                                              );
-                                            }
-
-                                            if (index ==
-                                                data.categories.length + 1) {
-                                              return MenuButton(
-                                                text: 'All',
-                                                isPressed:
-                                                    selected.value == '-1',
-                                                onTap: () {
-                                                  selected.value = '-1';
-                                                },
-                                              );
-                                            }
-
-                                            return MenuButton(
-                                              text: data.categories[index - 1]
-                                                      .title ??
-                                                  "",
-                                              isPressed: data
-                                                      .categories[index - 1]
-                                                      .id ==
-                                                  selected.value,
-                                              onTap: () {
-                                                selected.value = data
-                                                        .categories[index - 1]
-                                                        .id ??
-                                                    "";
-                                              },
-                                            );
-                                          })),
-                                    ),
-                                    const SizedBox(height: 12),
-                                  ],
-                                ),
-                              ),
-                              (selected.value == '0')
-                                  ? PromoScreen(promos: data.promos)
-                                  : (selected.value == '-1')
-                                      ? const SearchScreen()
-                                      : FoodScreen(categoryId: selected.value),
-                              TextButton(
-                                  onPressed: () => {
-                                        Supabase.instance.client.auth.signOut(),
-                                      },
-                                  child: Text(
-                                    'Sign Out',
-                                    style: TextStyle(
-                                      color: AppColor.buttonColor,
-                                    ),
-                                  ))
-                            ],
+                      child: Stack(
+                        children: [
+                          ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.85),
+                              BlendMode.srcOver,
+                            ),
+                            child: Image.asset(
+                              'assets/images/iconnew.png',
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
+                          SingleChildScrollView(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      top: kDefaultPadding,
+                                      left: kDefaultPadding,
+                                      right: kDefaultPadding,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        // Text(
+                                        //   'List Menu',
+                                        //   style: TextStyle(
+                                        //     color: Colors.white, //theme.foreground,
+                                        //     fontSize: 40,
+                                        //     fontFamily: 'JollyLodger',
+                                        //     fontWeight: FontWeight.w400,
+                                        //     letterSpacing: 3,
+                                        //   ),
+                                        // ),
+                                        Image.asset(
+                                          'assets/images/logonew.png',
+                                          width: 120,
+                                          height: 120,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        TextField(
+                                          onChanged: (value) => ref
+                                              .read(searchBarProvider.notifier)
+                                              .state = value,
+                                          onTap: () {
+                                            selected.value = '-1';
+                                          },
+                                          style: TextStyle(
+                                            color: theme.foreground,
+                                            fontSize: 16,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.43,
+                                          ),
+                                          decoration: InputDecoration(
+                                            hintText: 'Nama Menu',
+                                            hintStyle: TextStyle(
+                                              color: theme.foreground,
+                                              fontSize: 18,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.43,
+                                            ),
+                                            prefixIcon: Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 20),
+                                              child: Icon(Icons.search,
+                                                  size: 40,
+                                                  color: theme.foreground),
+                                            ),
+                                            filled: true,
+                                            fillColor: theme.border,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(80),
+                                              borderSide: BorderSide.none,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 24),
+                                        SizedBox(
+                                          height: 44,
+                                          child: ListView.separated(
+                                              separatorBuilder:
+                                                  (context, index) =>
+                                                      const SizedBox(width: 20),
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount:
+                                                  data.categories.length + 2,
+                                              itemBuilder: ((context, index) {
+                                                if (index == 0) {
+                                                  return MenuButton(
+                                                    text: 'Promo',
+                                                    isPressed:
+                                                        index.toString() ==
+                                                            selected.value,
+                                                    onTap: () {
+                                                      selected.value = '0';
+                                                    },
+                                                  );
+                                                }
+
+                                                if (index ==
+                                                    data.categories.length +
+                                                        1) {
+                                                  return MenuButton(
+                                                    text: 'All',
+                                                    isPressed:
+                                                        selected.value == '-1',
+                                                    onTap: () {
+                                                      selected.value = '-1';
+                                                    },
+                                                  );
+                                                }
+
+                                                return MenuButton(
+                                                  text: data
+                                                          .categories[index - 1]
+                                                          .title ??
+                                                      "",
+                                                  isPressed: data
+                                                          .categories[index - 1]
+                                                          .id ==
+                                                      selected.value,
+                                                  onTap: () {
+                                                    selected.value = data
+                                                            .categories[
+                                                                index - 1]
+                                                            .id ??
+                                                        "";
+                                                  },
+                                                );
+                                              })),
+                                        ),
+                                        const SizedBox(height: 12),
+                                      ],
+                                    ),
+                                  ),
+                                  (selected.value == '0')
+                                      ? PromoScreen(promos: data.promos)
+                                      : (selected.value == '-1')
+                                          ? const SearchScreen()
+                                          : FoodScreen(
+                                              categoryId: selected.value),
+                                  TextButton(
+                                      onPressed: () => {
+                                            Supabase.instance.client.auth
+                                                .signOut(),
+                                          },
+                                      child: Text(
+                                        'Sign Out',
+                                        style: TextStyle(
+                                          color: AppColor.buttonColor,
+                                        ),
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                 error: (err, stacktrace) {
