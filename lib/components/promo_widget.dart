@@ -51,7 +51,7 @@ class PopUpPromo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
-                      flex: 9,
+                      flex: 17,
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
@@ -62,7 +62,7 @@ class PopUpPromo extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 25),
+                    //const SizedBox(height: 20),
                     // Expanded(
                     //   flex: 2,
                     //   child: Column(

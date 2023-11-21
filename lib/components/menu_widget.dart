@@ -19,12 +19,12 @@ class MenuWidget extends StatelessWidget {
       children: [
         Container(
           height: 100,
-          margin: const EdgeInsets.all(15),
+          margin: const EdgeInsets.all(20),
           child: PopUpMenu(menu: menu),
         ),
         menu.soldOut ?? false
             ? Container(
-                margin: const EdgeInsets.all(15),
+                margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.all(25),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),

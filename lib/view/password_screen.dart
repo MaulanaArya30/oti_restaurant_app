@@ -27,24 +27,22 @@ class PasswordScreen extends HookConsumerWidget {
 
     return Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
             decoration: BoxDecoration(
               color: Color(0xFF1d1e20),
-              borderRadius: BorderRadius.circular(32),
+              borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            height: 360,
-            width: 416,
+            height: 280,
+            width: 480,
             child: Form(
               key: formKey,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.lock, color: Colors.white, size: 32),
-                    const SizedBox(height: 24),
                     const Text(
                       'Masukan Password',
                       style: TextStyle(
@@ -85,38 +83,43 @@ class PasswordScreen extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    MaterialButton(
-                      height: 50,
-                      minWidth: 103,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 24),
-                      color: AppColor.buttonColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      onPressed: () async {
-                        errorText.value = null;
-                        if (formKey.currentState!.validate()) {
-                          try {
-                            await ref
-                                .read(authNotifierProvider.notifier)
-                                .signIn(email, passwordController.text);
-                            if (context.mounted) {
-                              Navigator.of(context, rootNavigator: true).pop();
+                    Container(
+                      width: double.infinity,
+                      alignment: Alignment.bottomRight,
+                      child: MaterialButton(
+                        height: 50,
+                        minWidth: 103,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 24),
+                        color: AppColor.buttonColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        onPressed: () async {
+                          errorText.value = null;
+                          if (formKey.currentState!.validate()) {
+                            try {
+                              await ref
+                                  .read(authNotifierProvider.notifier)
+                                  .signIn(email, passwordController.text);
+                              if (context.mounted) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                              }
+                            } on AuthException catch (e) {
+                              errorText.value = e.message;
                             }
-                          } on AuthException catch (e) {
-                            errorText.value = e.message;
                           }
-                        }
-                      },
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: Color(0xFF111827),
-                          fontSize: 18,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 1.25,
+                        },
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Color(0xFF111827),
+                            fontSize: 18,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            height: 1.25,
+                          ),
                         ),
                       ),
                     )
