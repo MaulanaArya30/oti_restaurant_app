@@ -15,18 +15,32 @@ class FoodScreen extends ConsumerWidget {
 
     return menus.when(
       data: (data) {
-        return GridView.builder(
+        // return GridView.builder(
+        //   shrinkWrap: true,
+        //   physics: const NeverScrollableScrollPhysics(),
+        //   padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)
+        //       .copyWith(bottom: kDefaultPadding),
+        //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //     childAspectRatio: kMenuAspectRatio,
+        //     crossAxisCount: 1,
+        //   ),
+        //   itemCount: data.length,
+        //   itemBuilder: (context, index) {
+        //     return MenuWidget(menu: data[index]);
+        //   },
+        // );
+        return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: kMenuPagePadding)
               .copyWith(bottom: kDefaultPadding),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: kMenuAspectRatio,
-            crossAxisCount: 1,
-          ),
           itemCount: data.length,
           itemBuilder: (context, index) {
-            return MenuWidget(menu: data[index]);
+            return Container(
+              constraints: BoxConstraints(
+                  minHeight: 100, maxHeight: 100), // Set the minHeight
+              child: MenuWidget(menu: data[index]),
+            );
           },
         );
       },
