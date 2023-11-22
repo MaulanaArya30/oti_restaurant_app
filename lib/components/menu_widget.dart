@@ -2,9 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:restaurant_menu/components/constants.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
-import 'package:restaurant_menu/utils/extension.dart';
 
 import '../models/menu_model.dart';
 
@@ -18,8 +16,6 @@ class MenuWidget extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 100,
-          margin: const EdgeInsets.all(20),
           child: PopUpMenu(menu: menu),
         ),
         menu.soldOut ?? false
@@ -79,6 +75,7 @@ class PopUpMenu extends ConsumerWidget {
                   padding: const EdgeInsets.all(25),
                   decoration: BoxDecoration(
                     color: theme.card,
+                    border: Border.all(color: theme.border),
                     borderRadius: BorderRadius.circular(22),
                   ),
                   height: double.infinity,
@@ -168,9 +165,11 @@ class PopUpMenu extends ConsumerWidget {
           );
         },
         child: Container(
-          padding: const EdgeInsets.all(25),
+          padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16), color: theme.card),
+              border: Border.all(color: theme.border),
+              borderRadius: BorderRadius.circular(16),
+              color: theme.card),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

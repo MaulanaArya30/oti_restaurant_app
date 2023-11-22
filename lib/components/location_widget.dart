@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:restaurant_menu/components/constants.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
-import 'package:restaurant_menu/utils/extension.dart';
 
 class LocationWidget extends ConsumerWidget {
   const LocationWidget(
@@ -61,9 +59,7 @@ class LocationWidget extends ConsumerWidget {
           ),
         ),
       ),
-      loading: () => Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => SizedBox.shrink(),
       error: (error, stackTrace) => Text(error.toString()),
     );
   }

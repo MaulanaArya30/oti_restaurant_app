@@ -33,6 +33,16 @@ class AuthNotifier extends Notifier<sb.Session?> {
   Future<void> signOut() async {
     await supabase.auth.signOut();
   }
+
+  Future<bool> checkPassword(String email, String password) async {
+    final res = await supabase.auth
+        .signInWithPassword(email: email, password: password);
+    if (res.session == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
 
 final storeProvider = FutureProvider((ref) async {

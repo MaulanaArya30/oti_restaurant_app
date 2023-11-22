@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:restaurant_menu/components/constants.dart';
+import 'package:restaurant_menu/providers/auth_provider.dart';
 import 'package:restaurant_menu/providers/data_provider.dart';
 import 'package:restaurant_menu/providers/search_provider.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
-import 'package:restaurant_menu/utils/extension.dart';
 import 'package:restaurant_menu/view/food_screen.dart';
+import 'package:restaurant_menu/view/password_screen.dart';
 import 'package:restaurant_menu/view/promo_screen.dart';
 import 'package:restaurant_menu/view/search_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,6 +22,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
     final data = ref.watch(dataProvider);
     final selected = useState('0');
     final theme = ref.watch(appThemeProvider);
+    final auth = ref.watch(authNotifierProvider);
 
     return theme.when(
         data: (theme) => Scaffold(
@@ -30,6 +32,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
                 skipLoadingOnReload: true,
                 data: (data) => RefreshIndicator(
                       onRefresh: () async {
+                        ref.invalidate(appThemeProvider);
                         if (selected.value == '0') {
                           ref.invalidate(promoProvider);
                         } else {
@@ -38,16 +41,17 @@ class MenuScreenWithHook extends HookConsumerWidget {
                       },
                       child: Stack(
                         children: [
-                          ColorFiltered(
-                            colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.85),
-                              BlendMode.srcOver,
-                            ),
-                            child: Image.asset(
-                              'assets/images/iconnew.png',
-                              width: double.infinity,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
+                          Center(
+                            child: ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                theme.background.withOpacity(0.9),
+                                BlendMode.srcOver,
+                              ),
+                              child: Image.network(
+                                theme.logoUrl ?? "",
+                                width: MediaQuery.of(context).size.width / 2,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           SingleChildScrollView(
@@ -73,12 +77,13 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                         //     letterSpacing: 3,
                                         //   ),
                                         // ),
-                                        Image.asset(
-                                          'assets/images/logonew.png',
-                                          width: 120,
-                                          height: 120,
+                                        Image.network(
+                                          theme.logoUrl ?? "",
+                                          width: 96,
+                                          height: 96,
+                                          fit: BoxFit.contain,
                                         ),
-                                        const SizedBox(height: 12),
+                                        const SizedBox(height: 24),
                                         TextField(
                                           onChanged: (value) => ref
                                               .read(searchBarProvider.notifier)
@@ -91,7 +96,6 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                             fontSize: 16,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w400,
-                                            height: 1.43,
                                           ),
                                           decoration: InputDecoration(
                                             hintText: 'Nama Menu',
@@ -100,13 +104,12 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                               fontSize: 18,
                                               fontFamily: 'Inter',
                                               fontWeight: FontWeight.w400,
-                                              height: 1.43,
                                             ),
                                             prefixIcon: Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 20),
+                                              padding: EdgeInsets.only(
+                                                  left: 24, right: 16),
                                               child: Icon(Icons.search,
-                                                  size: 40,
+                                                  size: 24,
                                                   color: theme.foreground),
                                             ),
                                             filled: true,
@@ -183,17 +186,25 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                           ? const SearchScreen()
                                           : FoodScreen(
                                               categoryId: selected.value),
-                                  TextButton(
-                                      onPressed: () => {
-                                            Supabase.instance.client.auth
-                                                .signOut(),
+                                  SizedBox(height: 24),
+                                  InkWell(
+                                      onTap: () {
+                                        final email = auth?.user.email;
+                                        if (email == null) return;
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return CheckPassword(email: email);
                                           },
+                                        );
+                                      },
                                       child: Text(
                                         'Sign Out',
                                         style: TextStyle(
-                                          color: AppColor.buttonColor,
+                                          color: theme.primary,
                                         ),
-                                      ))
+                                      )),
+                                  SizedBox(height: 24),
                                 ],
                               ),
                             ),
@@ -213,5 +224,143 @@ class MenuScreenWithHook extends HookConsumerWidget {
         loading: () => const Center(
               child: CircularProgressIndicator(),
             ));
+  }
+}
+
+class CheckPassword extends HookConsumerWidget {
+  const CheckPassword({super.key, required this.email, this.submit});
+
+  final String email;
+  final Function()? submit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = GlobalKey<FormState>();
+    final theme = ref.watch(appThemeProvider);
+
+    final passwordController = useTextEditingController();
+    final obscureText = useState(true);
+    final errorText = useState<String?>(null);
+
+    void toggle() {
+      obscureText.value = !obscureText.value;
+    }
+
+    return theme.when(
+      data: (theme) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Container(
+              decoration: BoxDecoration(
+                color: theme.background,
+                border: Border.all(color: theme.border),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+              height: 280,
+              width: 480,
+              child: Form(
+                key: formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Masukan Password',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        style: TextStyle(color: Colors.white),
+                        controller: passwordController,
+                        obscureText: obscureText.value,
+                        validator: (value) =>
+                            value!.isEmpty ? 'Password is required' : null,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xFF505153),
+                          errorText: errorText.value,
+                          suffixIcon: GestureDetector(
+                            onTap: toggle,
+                            child: obscureText.value
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          hintText: 'Password',
+                          hintStyle: const TextStyle(
+                            color: Color(0xFFfbfcfc),
+                            fontSize: 16,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        width: double.infinity,
+                        alignment: Alignment.bottomRight,
+                        child: MaterialButton(
+                          height: 50,
+                          minWidth: 103,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 24),
+                          color: theme.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          onPressed: submit ??
+                              () async {
+                                errorText.value = null;
+                                if (formKey.currentState!.validate()) {
+                                  try {
+                                    final check = await ref
+                                        .read(authNotifierProvider.notifier)
+                                        .checkPassword(
+                                            email, passwordController.text);
+
+                                    if (check) {
+                                      ref
+                                          .read(authNotifierProvider.notifier)
+                                          .signOut();
+                                      if (context.mounted) {
+                                        Navigator.of(context).pop();
+                                      }
+                                    } else {
+                                      if (context.mounted) {
+                                        Navigator.of(context).pop();
+                                      }
+                                    }
+                                  } on AuthException catch (e) {
+                                    errorText.value = e.message;
+                                  }
+                                }
+                              },
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(
+                              color: Color(0xFF111827),
+                              fontSize: 18,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                              height: 1.25,
+                            ),
+                          ),
+                        ),
+                      )
+                    ]),
+              ))),
+      error: (error, stackTrace) => SizedBox.shrink(),
+      loading: () => SizedBox.shrink(),
+    );
   }
 }

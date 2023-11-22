@@ -6,12 +6,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:restaurant_menu/components/constants.dart';
 
 class PasswordScreen extends HookConsumerWidget {
-  const PasswordScreen({
-    super.key,
-    required this.email,
-  });
+  const PasswordScreen({super.key, required this.email, this.submit});
 
   final String email;
+  final Function()? submit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +29,8 @@ class PasswordScreen extends HookConsumerWidget {
         ),
         child: Container(
             decoration: BoxDecoration(
-              color: Color(0xFF1d1e20),
+              color: AppColor.backgroundColor,
+              border: Border.all(color: AppColor.searchbarColor),
               borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -95,22 +94,23 @@ class PasswordScreen extends HookConsumerWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
-                        onPressed: () async {
-                          errorText.value = null;
-                          if (formKey.currentState!.validate()) {
-                            try {
-                              await ref
-                                  .read(authNotifierProvider.notifier)
-                                  .signIn(email, passwordController.text);
-                              if (context.mounted) {
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop();
+                        onPressed: submit ??
+                            () async {
+                              errorText.value = null;
+                              if (formKey.currentState!.validate()) {
+                                try {
+                                  await ref
+                                      .read(authNotifierProvider.notifier)
+                                      .signIn(email, passwordController.text);
+                                  if (context.mounted) {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop();
+                                  }
+                                } on AuthException catch (e) {
+                                  errorText.value = e.message;
+                                }
                               }
-                            } on AuthException catch (e) {
-                              errorText.value = e.message;
-                            }
-                          }
-                        },
+                            },
                         child: const Text(
                           'Submit',
                           style: TextStyle(

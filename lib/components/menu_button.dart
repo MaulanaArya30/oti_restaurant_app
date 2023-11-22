@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:restaurant_menu/components/constants.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
-import 'package:restaurant_menu/utils/extension.dart';
 
 class MenuButton extends ConsumerWidget {
   const MenuButton({

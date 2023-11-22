@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:restaurant_menu/providers/auth_provider.dart';
+import 'package:restaurant_menu/providers/theme_provider.dart';
 import 'package:restaurant_menu/view/location_screen.dart';
 import 'package:restaurant_menu/view/menu_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -22,19 +23,31 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        // theme: ThemeData(
-        //     colorScheme: Theme.of(context).colorScheme.copyWith(
-        //           primary: const Color(0xFFFAD05A),
-        //         )),
-        title: 'RestaurantMenuApp',
-        home: AuthChecker());
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(appThemeProvider);
+
+    return theme.when(
+        data: (theme) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+                colorScheme: Theme.of(context).colorScheme.copyWith(
+                      primary: theme.primary,
+                      secondary: theme.secondary,
+                      background: theme.background,
+                      onBackground: theme.foreground,
+                      onSecondary: theme.secondary,
+                      onPrimary: theme.primaryForeground,
+                    )),
+            title: 'RestaurantMenuApp',
+            home: AuthChecker()),
+        error: (error, stackTrace) => SizedBox.shrink(),
+        loading: () => Center(
+              child: CircularProgressIndicator(),
+            ));
   }
 }
 
