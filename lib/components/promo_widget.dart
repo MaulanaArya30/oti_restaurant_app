@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:restaurant_menu/components/constants.dart';
+import 'package:restaurant_menu/providers/horizontal_provider.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
 
 import '../models/promos_model.dart';
@@ -33,6 +36,7 @@ class PopUpPromo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(appThemeProvider);
+    final thumbnail = ref.watch(imageProvider(promo.thumbnail ?? ""));
 
     return theme.when(
       data: (theme) => InkWell(
@@ -68,17 +72,39 @@ class PopUpPromo extends ConsumerWidget {
                         alignment: Alignment.topRight,
                       ),
                       Expanded(
-                        flex: 17,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            image: DecorationImage(
-                              image: NetworkImage(promo.thumbnail ?? ""),
-                              fit: BoxFit.contain,
-                            ),
+                        child: thumbnail.when(
+                          data: (data) {
+                            final isHorizontal = data.width > data.height;
+                            if (isHorizontal) {
+                              return RotatedBox(
+                                  quarterTurns: 1,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              promo.thumbnail ?? ""),
+                                          fit: BoxFit.contain),
+                                    ),
+                                  ));
+                            } else {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24),
+                                  image: DecorationImage(
+                                      image:
+                                          NetworkImage(promo.thumbnail ?? ""),
+                                      fit: BoxFit.contain),
+                                ),
+                              );
+                            }
+                          },
+                          error: (error, stackTrace) => Container(),
+                          loading: () => Center(
+                            child: CircularProgressIndicator(),
                           ),
                         ),
-                      ),
+                      )
                       //const SizedBox(height: 20),
                       // Expanded(
                       //   flex: 2,
