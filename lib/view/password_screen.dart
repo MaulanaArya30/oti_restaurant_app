@@ -66,12 +66,35 @@ class PasswordScreen extends HookConsumerWidget {
                         suffixIcon: GestureDetector(
                           onTap: toggle,
                           child: obscureText.value
-                              ? const Icon(Icons.visibility)
-                              : const Icon(Icons.visibility_off),
+                              ? const Icon(Icons.visibility,
+                                  color: Colors.white)
+                              : const Icon(Icons.visibility_off,
+                                  color: Colors.white),
                         ),
+                        // enabledBorder: OutlineInputBorder(
+                        //   borderRadius: BorderRadius.circular(6),
+                        //   borderSide: BorderSide(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        // disabledBorder: OutlineInputBorder(
+                        //   borderRadius: BorderRadius.circular(6),
+                        // ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: BorderSide(
+                            style: BorderStyle.solid,
+                            width: 2,
+                            color: Colors.white,
+                          ),
+                        ),
+
                         hintText: 'Password',
                         hintStyle: const TextStyle(
                           color: Color(0xFFfbfcfc),
