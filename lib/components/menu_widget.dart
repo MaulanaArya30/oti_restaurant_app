@@ -18,10 +18,10 @@ class MenuWidget extends StatelessWidget {
         Container(
           child: PopUpMenu(menu: menu),
         ),
-        menu.soldOut ?? false
+        menu.soldOut ?? true
             ? Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(25),
+                margin: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.all(0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.black.withOpacity(0.6),
@@ -84,7 +84,7 @@ class PopUpMenu extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        flex: 8,
+                        flex: 6,
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24),
@@ -97,7 +97,7 @@ class PopUpMenu extends ConsumerWidget {
                       ),
                       const SizedBox(height: 25),
                       Expanded(
-                        flex: 2,
+                        flex: 4,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

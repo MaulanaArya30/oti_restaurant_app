@@ -33,7 +33,7 @@ class LocationScreen extends ConsumerWidget {
                 Text('Pilih Lokasi', style: AppColor.titleStyle),
                 const SizedBox(height: 48),
                 Container(
-                    padding: const EdgeInsets.only(bottom: 60),
+                    padding: const EdgeInsets.only(bottom: 90),
                     height:
                         MediaQuery.of(context).size.height * kMenuScreenHeight,
                     child: store.when(
