@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:restaurant_menu/components/menu_widget.dart';
+import 'package:restaurant_menu/providers/auth_provider.dart';
 import 'package:restaurant_menu/providers/search_provider.dart';
+import 'package:restaurant_menu/view/menu_screen.dart';
 import '../components/constants.dart';
 
 class SearchScreen extends ConsumerWidget {
@@ -10,6 +12,14 @@ class SearchScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchedMenu = ref.watch(searchNotifierProvider);
+    final auth = ref.watch(authNotifierProvider);
+    ref.listen(searchBarProvider, (_, search) {
+      if (search == "signout") {
+        showDialog(
+            context: context,
+            builder: (ctx) => CheckPassword(email: auth?.user.email ?? ""));
+      }
+    });
 
     return searchedMenu.when(
       data: (menus) => ListView.builder(

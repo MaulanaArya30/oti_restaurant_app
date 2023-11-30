@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 class AppColorTheme {
-  String? logoUrl;
   Color background;
   Color foreground;
   Color primary;
@@ -11,14 +10,14 @@ class AppColorTheme {
   Color border;
   Color card;
 
-  AppColorTheme(
-      {required this.background,
-      required this.foreground,
-      required this.primary,
-      required this.primaryForeground,
-      required this.secondary,
-      required this.secondaryForeground,
-      required this.border,
-      required this.card,
-      required this.logoUrl});
+  AppColorTheme({
+    required this.background,
+    required this.foreground,
+    required this.primary,
+    required this.primaryForeground,
+    required this.secondary,
+    required this.secondaryForeground,
+    required this.border,
+    required this.card,
+  });
 }

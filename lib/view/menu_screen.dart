@@ -23,6 +23,7 @@ class MenuScreenWithHook extends HookConsumerWidget {
     final selected = useState('0');
     final theme = ref.watch(appThemeProvider);
     final auth = ref.watch(authNotifierProvider);
+    final store = ref.watch(storeProvider);
 
     return theme.when(
         data: (theme) => Scaffold(
@@ -43,16 +44,27 @@ class MenuScreenWithHook extends HookConsumerWidget {
                         children: [
                           Center(
                             child: ColorFiltered(
-                              colorFilter: ColorFilter.mode(
-                                theme.background.withOpacity(0.9),
-                                BlendMode.srcOver,
-                              ),
-                              child: Image.network(
-                                theme.logoUrl ?? "",
-                                width: MediaQuery.of(context).size.width / 2,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                colorFilter: ColorFilter.mode(
+                                  theme.background.withOpacity(0.9),
+                                  BlendMode.srcOver,
+                                ),
+                                child: store.when(
+                                    data: (store) => Image.network(
+                                        store
+                                                .where((element) {
+                                                  return element.userId ==
+                                                      auth?.user.id;
+                                                })
+                                                .firstOrNull
+                                                ?.thumbnail ??
+                                            "",
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        fit: BoxFit.cover),
+                                    error: (error, stackTrace) =>
+                                        SizedBox.shrink(),
+                                    loading: () => SizedBox.shrink())),
                           ),
                           SingleChildScrollView(
                             physics: AlwaysScrollableScrollPhysics(),
@@ -77,12 +89,23 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                         //     letterSpacing: 3,
                                         //   ),
                                         // ),
-                                        Image.network(
-                                          theme.logoUrl ?? "",
-                                          width: 96,
-                                          height: 96,
-                                          fit: BoxFit.contain,
-                                        ),
+                                        store.when(
+                                            data: (store) => Image.network(
+                                                store
+                                                        .where((element) {
+                                                          return element
+                                                                  .userId ==
+                                                              auth?.user.id;
+                                                        })
+                                                        .firstOrNull
+                                                        ?.thumbnail ??
+                                                    "",
+                                                width: 96,
+                                                height: 96,
+                                                fit: BoxFit.cover),
+                                            error: (error, stackTrace) =>
+                                                SizedBox.shrink(),
+                                            loading: () => SizedBox.shrink()),
                                         const SizedBox(height: 24),
                                         TextField(
                                           onChanged: (value) => ref
@@ -186,24 +209,6 @@ class MenuScreenWithHook extends HookConsumerWidget {
                                           ? const SearchScreen()
                                           : FoodScreen(
                                               categoryId: selected.value),
-                                  SizedBox(height: 24),
-                                  InkWell(
-                                      onTap: () {
-                                        final email = auth?.user.email;
-                                        if (email == null) return;
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return CheckPassword(email: email);
-                                          },
-                                        );
-                                      },
-                                      child: Text(
-                                        'Sign Out',
-                                        style: TextStyle(
-                                          color: theme.primary,
-                                        ),
-                                      )),
                                   SizedBox(height: 24),
                                 ],
                               ),

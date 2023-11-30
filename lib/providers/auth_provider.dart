@@ -1,4 +1,5 @@
 import 'package:restaurant_menu/models/store_model.dart';
+import 'package:restaurant_menu/providers/theme_provider.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
@@ -13,6 +14,7 @@ class AuthNotifier extends Notifier<sb.Session?> {
   sb.Session? build() {
     final authStream = supabase.auth.onAuthStateChange.listen((event) {
       setSession(event.session);
+      ref.invalidate(appThemeProvider);
     });
 
     ref.onDispose(() {

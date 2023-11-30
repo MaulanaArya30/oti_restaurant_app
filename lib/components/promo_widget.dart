@@ -36,7 +36,6 @@ class PopUpPromo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(appThemeProvider);
-    final thumbnail = ref.watch(imageProvider(promo.thumbnail ?? ""));
 
     return theme.when(
       data: (theme) => InkWell(
@@ -72,39 +71,14 @@ class PopUpPromo extends ConsumerWidget {
                         alignment: Alignment.topRight,
                       ),
                       Expanded(
-                        child: thumbnail.when(
-                          data: (data) {
-                            final isHorizontal = data.width > data.height;
-                            if (isHorizontal) {
-                              return RotatedBox(
-                                  quarterTurns: 1,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24),
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              promo.thumbnail ?? ""),
-                                          fit: BoxFit.contain),
-                                    ),
-                                  ));
-                            } else {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24),
-                                  image: DecorationImage(
-                                      image:
-                                          NetworkImage(promo.thumbnail ?? ""),
-                                      fit: BoxFit.contain),
-                                ),
-                              );
-                            }
-                          },
-                          error: (error, stackTrace) => Container(),
-                          loading: () => Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          image: DecorationImage(
+                              image: NetworkImage(promo.promoPhoto ?? ""),
+                              fit: BoxFit.contain),
                         ),
-                      )
+                      ))
                       //const SizedBox(height: 20),
                       // Expanded(
                       //   flex: 2,
