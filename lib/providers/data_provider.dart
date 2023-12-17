@@ -1,11 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart';
-import 'package:restaurant_menu/models/store_model.dart';
 import 'package:restaurant_menu/providers/auth_provider.dart';
 import 'package:restaurant_menu/providers/hive_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
-
 import '../models/category_model.dart';
 import '../models/menu_model.dart';
 import '../models/promos_model.dart';
@@ -31,17 +29,16 @@ final promoProvider = FutureProvider.autoDispose<List<Promo>>((ref) async {
 
     return promos ?? [];
   } catch (error) {
-    print("catchPROMOS");
+    debugPrint("cachedPromoDataKey${auth?.user.id}");
     final cachedData =
         box.get("cachedPromoDataKey${auth?.user.id}") as List<dynamic>?;
 
     if (cachedData != null) {
-      print("cachedData not null");
+      debugPrint("cachedData not null");
       final data = cachedData.map((e) => Promo.fromJson(e)).toList();
       return data;
     } else {
-      print("cachedData  null");
-
+      debugPrint("cachedData  null");
       return []; // Return null or handle the error as needed
     }
   }
@@ -70,6 +67,8 @@ final categoryProvider =
 
     return categories ?? [];
   } catch (error) {
+    debugPrint("cachedCategoryDataKey${auth?.user.id}");
+
     // Handle the network error here
     // You can log the error or perform any other necessary actions.
 
@@ -107,12 +106,16 @@ final menuProvider = FutureProvider.autoDispose<List<Menu>>((ref) async {
 
     return menus ?? [];
   } catch (error) {
+    debugPrint("cachedMenuDataKey${auth?.user.id}");
+
     // Handle the network error here
     // You can log the error or perform any other necessary actions.
 
     // Try to retrieve cached data from the box
     final cachedData =
         box.get("cachedMenuDataKey${auth?.user.id}") as List<dynamic>?;
+
+    debugPrint("cachedMenu data${cachedData}");
 
     if (cachedData != null) {
       return cachedData.map((e) => Menu.fromJson(e)).toList();
@@ -141,7 +144,9 @@ final dataProvider = FutureProvider.autoDispose<ViewModel>((ref) async {
     ...menus.map(
         (menu) => DefaultCacheManager().downloadFile(menu.thumbnail ?? "")),
     ...promos.map(
-        (promo) => DefaultCacheManager().downloadFile(promo.thumbnail ?? ""))
+        (promo) => DefaultCacheManager().downloadFile(promo.thumbnail ?? "")),
+    ...promos.map(
+        (promo) => DefaultCacheManager().downloadFile(promo.promoPhoto ?? ""))
   ]);
 
   return ViewModel(categories: categories, menus: menus, promos: promos);

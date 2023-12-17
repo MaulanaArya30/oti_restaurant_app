@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:restaurant_menu/models/store_model.dart';
 import 'package:restaurant_menu/providers/hive_provider.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
@@ -32,25 +34,10 @@ class AuthNotifier extends Notifier<sb.Session?> {
     final secureStorage = ref.watch(secureStorageProvider);
     final passwordHash = sha256.convert(utf8.encode(password));
     try {
-      final authResponse = await supabase.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
-      if (authResponse.session != null) {
-        secureStorage.write(key: email, value: passwordHash.toString());
-        secureStorage.write(
-          key: _getUserKey(email),
-          value: jsonEncode(authResponse.session?.toJson()),
-        );
-      }
+      await _signInWithSupabase(email, password, passwordHash, secureStorage);
     } catch (e) {
-      final storedHash = await secureStorage.read(key: email);
-      if (storedHash == passwordHash.toString()) {
-        final userJson = await secureStorage.read(key: _getUserKey(email));
-        if (userJson == null) return;
-        final user = sb.Session.fromJson(json.decode(userJson));
-        state = user;
-      }
+      await _signInWithLocalPassword(email, passwordHash, secureStorage)
+          .catchError((err) => print(err.toString()));
     }
   }
 
@@ -61,17 +48,55 @@ class AuthNotifier extends Notifier<sb.Session?> {
   }
 
   Future<bool> checkPassword(String email, String password) async {
-    final res = await supabase.auth
-        .signInWithPassword(email: email, password: password);
-    if (res.session == null) {
-      return false;
-    } else {
-      return true;
+    try {
+      final res = await supabase.auth
+          .signInWithPassword(email: email, password: password);
+      if (res.session == null) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (e) {
+      final passwordHash = sha256.convert(utf8.encode(password));
+      final secureStorage = ref.watch(secureStorageProvider);
+      final storedHash = await secureStorage.read(key: email);
+      if (storedHash == passwordHash.toString()) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
   void _setSession(sb.Session? session) {
     state = session;
+  }
+
+  Future<void> _signInWithSupabase(String email, String password,
+      Digest passwordHash, FlutterSecureStorage secureStorage) async {
+    final authResponse = await supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
+    if (authResponse.session != null) {
+      await secureStorage.write(key: email, value: passwordHash.toString());
+      await secureStorage.write(
+        key: _getUserKey(email),
+        value: jsonEncode(authResponse.session?.toJson()),
+      );
+    }
+  }
+
+  Future<void> _signInWithLocalPassword(String email, Digest passwordHash,
+      FlutterSecureStorage secureStorage) async {
+    debugPrint("signing in with local password");
+    final storedHash = await secureStorage.read(key: email);
+    if (storedHash == passwordHash.toString()) {
+      final userJson = await secureStorage.read(key: _getUserKey(email));
+      if (userJson == null) return;
+      final user = sb.Session.fromJson(jsonDecode(userJson));
+      state = user;
+    }
   }
 }
 
@@ -80,7 +105,7 @@ final storeProvider = FutureProvider((ref) async {
   final supabase = sb.Supabase.instance.client;
 
   try {
-    print("trying");
+    debugPrint("trying");
     final res = await supabase.from("store").select("*") as List<dynamic>?;
     if (res != null) {
       box.put("cachedStoreDataKey", res);
@@ -90,7 +115,7 @@ final storeProvider = FutureProvider((ref) async {
 
     return store ?? [];
   } catch (e) {
-    print("catched");
+    debugPrint("catched");
     final cachedData = box.get("cachedStoreDataKey") as List<dynamic>?;
 
     if (cachedData != null) {

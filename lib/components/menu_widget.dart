@@ -105,14 +105,18 @@ class PopUpMenu extends ConsumerWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  menu.title ?? "",
-                                  style: TextStyle(
-                                    color: theme.foreground,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w500,
+                                Expanded(
+                                  child: Text(
+                                    menu.title ?? "",
+                                    style: TextStyle(
+                                      color: theme.foreground,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
+                                SizedBox(width: 24),
                                 Text(
                                   'Rp. ${menu.price}',
                                   style: TextStyle(
@@ -140,17 +144,14 @@ class PopUpMenu extends ConsumerWidget {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                alignment: Alignment.bottomCenter,
-                                child: InkWell(
-                                  onTap: () => Navigator.pop(context),
-                                  child: Text(
-                                    'Back',
-                                    style: TextStyle(
-                                        fontSize: 24, color: theme.primary),
-                                  ),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              child: InkWell(
+                                onTap: () => Navigator.pop(context),
+                                child: Text(
+                                  'Back',
+                                  style: TextStyle(
+                                      fontSize: 24, color: theme.primary),
                                 ),
                               ),
                             ),

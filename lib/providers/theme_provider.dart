@@ -10,9 +10,6 @@ import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
 final appThemeProvider = FutureProvider.autoDispose<AppColorTheme>((ref) async {
   debugPrint('reloading apptheme');
-  final supabase = sb.Supabase.instance.client;
-
-  final box = ref.watch(hiveProvider);
 
   final theme = ThemeModel();
 
@@ -25,7 +22,7 @@ final appThemeProvider = FutureProvider.autoDispose<AppColorTheme>((ref) async {
   final border = theme.border;
   final card = theme.card;
 
-  print("card $card");
+  debugPrint("card $card");
 
   return AppColorTheme(
     background: background != null
