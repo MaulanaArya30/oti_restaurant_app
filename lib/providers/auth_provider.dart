@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:restaurant_menu/models/store_model.dart';
+import 'package:restaurant_menu/providers/hive_provider.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
@@ -13,7 +17,7 @@ class AuthNotifier extends Notifier<sb.Session?> {
   @override
   sb.Session? build() {
     final authStream = supabase.auth.onAuthStateChange.listen((event) {
-      setSession(event.session);
+      _setSession(event.session);
       ref.invalidate(appThemeProvider);
     });
 
@@ -24,13 +28,33 @@ class AuthNotifier extends Notifier<sb.Session?> {
     return supabase.auth.currentSession;
   }
 
-  void setSession(sb.Session? session) {
-    state = session;
+  Future<void> signIn(String email, String password) async {
+    final secureStorage = ref.watch(secureStorageProvider);
+    final passwordHash = sha256.convert(utf8.encode(password));
+    try {
+      final authResponse = await supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      if (authResponse.session != null) {
+        secureStorage.write(key: email, value: passwordHash.toString());
+        secureStorage.write(
+          key: _getUserKey(email),
+          value: jsonEncode(authResponse.session?.toJson()),
+        );
+      }
+    } catch (e) {
+      final storedHash = await secureStorage.read(key: email);
+      if (storedHash == passwordHash.toString()) {
+        final userJson = await secureStorage.read(key: _getUserKey(email));
+        if (userJson == null) return;
+        final user = sb.Session.fromJson(json.decode(userJson));
+        state = user;
+      }
+    }
   }
 
-  Future<void> signIn(String email, String password) async {
-    await supabase.auth.signInWithPassword(email: email, password: password);
-  }
+  String _getUserKey(String email) => '${email}_session';
 
   Future<void> signOut() async {
     await supabase.auth.signOut();
@@ -45,14 +69,34 @@ class AuthNotifier extends Notifier<sb.Session?> {
       return true;
     }
   }
+
+  void _setSession(sb.Session? session) {
+    state = session;
+  }
 }
 
 final storeProvider = FutureProvider((ref) async {
+  final box = ref.watch(hiveProvider);
   final supabase = sb.Supabase.instance.client;
 
-  final res = await supabase.from("store").select("*") as List<dynamic>;
+  try {
+    print("trying");
+    final res = await supabase.from("store").select("*") as List<dynamic>?;
+    if (res != null) {
+      box.put("cachedStoreDataKey", res);
+    }
 
-  final store = res.map((e) => StoreModel.fromJson(e)).toList();
+    final store = res?.map((e) => StoreModel.fromJson(e)).toList();
 
-  return store;
+    return store ?? [];
+  } catch (e) {
+    print("catched");
+    final cachedData = box.get("cachedStoreDataKey") as List<dynamic>?;
+
+    if (cachedData != null) {
+      return cachedData.map((e) => StoreModel.fromJson(e)).toList();
+    } else {
+      return []; // Return null or handle the error as needed
+    }
+  }
 });

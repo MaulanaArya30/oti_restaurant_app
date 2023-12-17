@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:restaurant_menu/components/constants.dart';
-import 'package:restaurant_menu/providers/horizontal_provider.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
 
 import '../models/promos_model.dart';

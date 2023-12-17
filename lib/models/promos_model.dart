@@ -12,7 +12,7 @@ class Promo {
       required this.userId,
       required this.promoPhoto});
 
-  factory Promo.fromJson(Map<String, dynamic> json) {
+  factory Promo.fromJson(Map json) {
     return Promo(
         id: json['id'],
         thumbnail: json['thumbnail'],

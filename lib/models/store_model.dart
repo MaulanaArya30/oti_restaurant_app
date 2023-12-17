@@ -13,7 +13,7 @@ class StoreModel {
     this.userId,
   });
 
-  factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
+  factory StoreModel.fromJson(Map json) => StoreModel(
         id: json['id'],
         storeName: json['store_name'],
         thumbnail: json['thumbnail'],

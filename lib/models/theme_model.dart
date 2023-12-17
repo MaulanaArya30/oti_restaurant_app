@@ -22,7 +22,7 @@ class ThemeModel {
       this.userId,
       this.card});
 
-  factory ThemeModel.fromJson(Map<String, dynamic> json) => ThemeModel(
+  factory ThemeModel.fromJson(Map json) => ThemeModel(
       createdAt: json["created_at"] == null
           ? null
           : DateTime.parse(json["created_at"]),
@@ -36,7 +36,7 @@ class ThemeModel {
       userId: json["user_id"],
       card: json["card"]);
 
-  Map<String, dynamic> toJson() => {
+  Map toJson() => {
         "created_at": createdAt?.toIso8601String(),
         "background": background,
         "foreground": foreground,

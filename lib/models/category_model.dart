@@ -9,7 +9,7 @@ class Category {
     required this.userId,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) {
+  factory Category.fromJson(Map json) {
     return Category(
       id: json['id'],
       title: json['title'],

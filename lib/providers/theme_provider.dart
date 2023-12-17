@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:restaurant_menu/components/constants.dart';
 import 'package:restaurant_menu/models/theme.dart';
 import 'package:restaurant_menu/models/theme_model.dart';
-import 'package:restaurant_menu/providers/auth_provider.dart';
 import 'package:restaurant_menu/providers/hive_provider.dart';
 import 'package:restaurant_menu/utils/extension.dart';
 import 'package:riverpod/riverpod.dart';
@@ -15,7 +14,7 @@ final appThemeProvider = FutureProvider.autoDispose<AppColorTheme>((ref) async {
 
   final box = ref.watch(hiveProvider);
 
-  final theme = await getTheme(supabase, box) ?? ThemeModel();
+  final theme = ThemeModel();
 
   final background = theme.background;
   final foreground = theme.foreground;

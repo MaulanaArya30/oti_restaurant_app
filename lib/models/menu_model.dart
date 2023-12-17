@@ -20,7 +20,7 @@ class Menu {
       required this.userId,
       required this.description});
 
-  factory Menu.fromJson(Map<String, dynamic> json) {
+  factory Menu.fromJson(Map json) {
     return Menu(
         id: json['id'],
         title: json['title'],

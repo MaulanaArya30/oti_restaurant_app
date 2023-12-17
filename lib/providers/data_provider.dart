@@ -1,4 +1,8 @@
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart';
+import 'package:restaurant_menu/models/store_model.dart';
+import 'package:restaurant_menu/providers/auth_provider.dart';
 import 'package:restaurant_menu/providers/hive_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
@@ -9,6 +13,7 @@ import '../models/view_model.dart';
 
 final promoProvider = FutureProvider.autoDispose<List<Promo>>((ref) async {
   final supabase = sb.Supabase.instance.client;
+  final auth = ref.watch(authNotifierProvider);
   final box = ref.read(hiveProvider);
 
   try {
@@ -19,22 +24,24 @@ final promoProvider = FutureProvider.autoDispose<List<Promo>>((ref) async {
         .order('item_order', ascending: true) as List<dynamic>?;
 
     if (promosResponse != null) {
-      box.put("cachedPromoDataKey", promosResponse);
+      box.put("cachedPromoDataKey${auth?.user.id}", promosResponse);
     }
 
     final promos = promosResponse?.map((e) => Promo.fromJson(e)).toList();
 
     return promos ?? [];
   } catch (error) {
-    // Handle the network error here
-    // You can log the error or perform any other necessary actions.
-
-    // Try to retrieve cached data from the box
-    final cachedData = box.get("cachedPromoDataKey") as List<dynamic>?;
+    print("catchPROMOS");
+    final cachedData =
+        box.get("cachedPromoDataKey${auth?.user.id}") as List<dynamic>?;
 
     if (cachedData != null) {
-      return cachedData.map((e) => Promo.fromJson(e)).toList();
+      print("cachedData not null");
+      final data = cachedData.map((e) => Promo.fromJson(e)).toList();
+      return data;
     } else {
+      print("cachedData  null");
+
       return []; // Return null or handle the error as needed
     }
   }
@@ -44,6 +51,7 @@ final categoryProvider =
     FutureProvider.autoDispose<List<Category>>((ref) async {
   final supabase = sb.Supabase.instance.client;
   final box = ref.read(hiveProvider);
+  final auth = ref.watch(authNotifierProvider);
 
   try {
     final categoriesResponse = await supabase
@@ -52,7 +60,7 @@ final categoryProvider =
         .order('item_order', ascending: true) as List<dynamic>?;
 
     if (categoriesResponse != null) {
-      box.put("cachedCategoryDataKey", categoriesResponse);
+      box.put("cachedCategoryDataKey${auth?.user.id}", categoriesResponse);
     }
 
     final categories =
@@ -66,7 +74,8 @@ final categoryProvider =
     // You can log the error or perform any other necessary actions.
 
     // Try to retrieve cached data from the box
-    final cachedData = box.get("cachedCategoryDataKey") as List<dynamic>?;
+    final cachedData =
+        box.get("cachedCategoryDataKey${auth?.user.id}") as List<dynamic>?;
 
     if (cachedData != null) {
       return cachedData.map((e) => Category.fromJson(e)).toList();
@@ -79,6 +88,7 @@ final categoryProvider =
 final menuProvider = FutureProvider.autoDispose<List<Menu>>((ref) async {
   final supabase = sb.Supabase.instance.client;
   final box = ref.read(hiveProvider);
+  final auth = ref.watch(authNotifierProvider);
 
   try {
     final menusResponse = await supabase
@@ -88,7 +98,7 @@ final menuProvider = FutureProvider.autoDispose<List<Menu>>((ref) async {
         .order('item_order', ascending: true) as List<dynamic>?;
 
     if (menusResponse != null) {
-      box.put("cachedMenuDataKey", menusResponse);
+      box.put("cachedMenuDataKey${auth?.user.id}", menusResponse);
     }
 
     final menus = menusResponse?.map((e) => Menu.fromJson(e)).toList();
@@ -101,7 +111,8 @@ final menuProvider = FutureProvider.autoDispose<List<Menu>>((ref) async {
     // You can log the error or perform any other necessary actions.
 
     // Try to retrieve cached data from the box
-    final cachedData = box.get("cachedMenuDataKey") as List<dynamic>?;
+    final cachedData =
+        box.get("cachedMenuDataKey${auth?.user.id}") as List<dynamic>?;
 
     if (cachedData != null) {
       return cachedData.map((e) => Menu.fromJson(e)).toList();
@@ -116,16 +127,24 @@ final dataProvider = FutureProvider.autoDispose<ViewModel>((ref) async {
   final categoryFuture = ref.watch(categoryProvider.future);
   final promoFuture = ref.watch(promoProvider.future);
 
-  final [categories, menus, promos] = await Future.wait([
+  final [
+    categories as List<Category>,
+    menus as List<Menu>,
+    promos as List<Promo>,
+  ] = await Future.wait([
     categoryFuture,
     menuFuture,
     promoFuture,
   ]);
 
-  return ViewModel(
-      categories: categories as List<Category>,
-      menus: menus as List<Menu>,
-      promos: promos as List<Promo>);
+  await Future.wait([
+    ...menus.map(
+        (menu) => DefaultCacheManager().downloadFile(menu.thumbnail ?? "")),
+    ...promos.map(
+        (promo) => DefaultCacheManager().downloadFile(promo.thumbnail ?? ""))
+  ]);
+
+  return ViewModel(categories: categories, menus: menus, promos: promos);
 });
 
 final menuInCategoryProvider = Provider.autoDispose

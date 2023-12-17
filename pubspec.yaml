@@ -45,6 +45,9 @@ dependencies:
   hive_flutter: ^1.1.0
   flutter_native_splash: ^2.3.5
   http: ^1.1.0
+  flutter_secure_storage: ^9.0.0
+  crypto: ^3.0.3
+  flutter_cache_manager: ^3.3.1
 
 #android 12 cant use flutter_native_splash
 # flutter_native_splash:
