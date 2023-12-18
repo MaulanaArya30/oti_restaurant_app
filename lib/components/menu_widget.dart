@@ -4,8 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
+import 'package:intl/intl.dart';
 
 import '../models/menu_model.dart';
+
+final idrFormatter = new NumberFormat.currency(
+  locale: "id-ID",
+  symbol: 'Rp ',
+);
 
 class MenuWidget extends StatelessWidget {
   final Menu menu;
@@ -121,7 +127,7 @@ class PopUpMenu extends ConsumerWidget {
                                 ),
                                 SizedBox(width: 24),
                                 Text(
-                                  'Rp. ${menu.price}',
+                                  idrFormatter.format(menu.price ?? ""),
                                   style: TextStyle(
                                     color: theme.foreground,
                                     fontSize: 32,
@@ -187,7 +193,7 @@ class PopUpMenu extends ConsumerWidget {
                 ),
               ),
               Text(
-                'Rp. ${menu.price}',
+                idrFormatter.format(menu.price ?? ""),
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.6),
                   fontSize: 18,
