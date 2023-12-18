@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
@@ -71,7 +72,8 @@ class PopUpPromo extends ConsumerWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
                           image: DecorationImage(
-                              image: NetworkImage(promo.promoPhoto ?? ""),
+                              image: CachedNetworkImageProvider(
+                                  promo.promoPhoto ?? ""),
                               fit: BoxFit.contain),
                         ),
                       ))
@@ -152,7 +154,7 @@ class PopUpPromo extends ConsumerWidget {
             borderRadius: BorderRadius.circular(24),
             //color: Color(0xFFE5E7EB),
             image: DecorationImage(
-              image: NetworkImage(promo.thumbnail ?? ""),
+              image: CachedNetworkImageProvider(promo.thumbnail ?? ""),
               fit: BoxFit.cover,
             ),
           ),

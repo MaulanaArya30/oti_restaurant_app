@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:restaurant_menu/components/constants.dart';
@@ -37,7 +38,7 @@ class LocationWidget extends ConsumerWidget {
                 child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(thumbnail),
+                        image: CachedNetworkImageProvider(thumbnail),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(24),

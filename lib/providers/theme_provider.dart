@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:restaurant_menu/components/constants.dart';
 import 'package:restaurant_menu/models/theme.dart';
 import 'package:restaurant_menu/models/theme_model.dart';
-import 'package:restaurant_menu/providers/hive_provider.dart';
 import 'package:restaurant_menu/utils/extension.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;

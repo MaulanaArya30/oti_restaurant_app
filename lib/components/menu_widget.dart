@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:restaurant_menu/providers/theme_provider.dart';
@@ -89,7 +90,8 @@ class PopUpMenu extends ConsumerWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24),
                             image: DecorationImage(
-                              image: NetworkImage(menu.thumbnail ?? ""),
+                              image: CachedNetworkImageProvider(
+                                  menu.thumbnail ?? ""),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -99,11 +101,12 @@ class PopUpMenu extends ConsumerWidget {
                       Expanded(
                         flex: 4,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
                                   child: Text(
@@ -113,7 +116,7 @@ class PopUpMenu extends ConsumerWidget {
                                       fontSize: 32,
                                       fontWeight: FontWeight.w500,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                   ),
                                 ),
                                 SizedBox(width: 24),
@@ -144,6 +147,7 @@ class PopUpMenu extends ConsumerWidget {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 8),
                             Container(
                               alignment: Alignment.bottomCenter,
                               child: InkWell(

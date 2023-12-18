@@ -18,6 +18,7 @@ class SearchScreen extends ConsumerWidget {
         showDialog(
             context: context,
             builder: (ctx) => CheckPassword(email: auth?.user.email ?? ""));
+        ref.read(searchBarProvider.notifier).state = "";
       }
     });
 
