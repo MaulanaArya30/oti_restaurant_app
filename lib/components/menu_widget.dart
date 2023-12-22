@@ -11,6 +11,7 @@ import '../models/menu_model.dart';
 final idrFormatter = new NumberFormat.currency(
   locale: "id-ID",
   symbol: 'Rp ',
+  decimalDigits: 0,
 );
 
 class MenuWidget extends StatelessWidget {
@@ -147,7 +148,7 @@ class PopUpMenu extends ConsumerWidget {
                                     style: TextStyle(
                                       color: theme.foreground.withOpacity(0.6),
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w300,
                                     ),
                                   ),
                                 ),
